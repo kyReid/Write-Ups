@@ -3,4 +3,4 @@ Notes, Guides, and information on wargames done
 
 ## Bandit
 
-The Bandit wargame is aimed at absolute beginners. It teaches the basics needed to be able to play other wargames.
+The Bandit wargame is my first attempt at learning the hacker mindset and doing CTF related games.
