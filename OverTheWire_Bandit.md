@@ -105,3 +105,229 @@ bandit3@bandit:~/inhere$ ls -a # the -a allows you to see all objects even those
 bandit3@bandit:~/inhere$ cat .hidden
 pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 ```
+
+## Level 4
+
+The password for the next level is stored in the **only human-readable file in the inhere directory**. Tip: if your terminal is messed up, try the “reset” command.
+
+**Commands you may need to solve this level**
+ls, cd, cat, file, du, find
+
+### Approach
+
+Ran some reconnaissance on the directories, tried using `ls -h` since it mentioned something about human readability. Did nothing, so i tried using the `file ./filename` to get information on the file, output told me which files were just data and which one was readable.
+
+```bash
+bandit4@bandit:~/inhere$ ls -h
+-file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
+bandit4@bandit:~/inhere$ ls -h -l # not sure what this did
+total 40K
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file00
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file01
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file02
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file03
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file04
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file05
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file06
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file07
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file08
+-rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file09
+bandit4@bandit:~/inhere$ ls --human-readable # thought this would be helpful to find out which file had the flag..nope
+-file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
+bandit4@bandit:~/inhere$ file ./-file00 # checked the file by path for each file and found the ascii text file
+./-file00: data
+bandit4@bandit:~/inhere$ file ./-file01
+./-file01: data
+bandit4@bandit:~/inhere$ file ./-file02
+./-file02: data
+bandit4@bandit:~/inhere$ file ./-file03
+./-file03: data
+bandit4@bandit:~/inhere$ file ./-file04
+./-file04: data
+bandit4@bandit:~/inhere$ file ./-file05
+./-file05: data
+bandit4@bandit:~/inhere$ file ./-file06
+./-file06: data
+bandit4@bandit:~/inhere$ file ./-file07
+./-file07: ASCII text
+bandit4@bandit:~/inhere$ file ./-file08
+./-file08: data
+bandit4@bandit:~/inhere$ file ./-file09
+./-file09: data
+bandit4@bandit:~/inhere$ cat ./-file07
+koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+```
+
+## Level 5
+
+The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
+
+human-readable
+1033 bytes in size
+not executable
+
+**Commands you may need to solve this level**
+ls, cd, cat, file, du, find
+
+### Approach
+
+Based on the information provided above, i figured i had to run some sort of search using the `find` and `file` command.Running through the `find` man page i was able to find options to find the file based on the properties mentioned above.
+
+```bash
+bandit5@bandit:~/inhere$ find -size 1033c -readable # cmd looks for a file that is of 1033 bytes and readable and not executable
+bandit5@bandit:~/inhere$ cd maybehere07
+bandit5@bandit:~/inhere/maybehere07$ ls
+-file1  -file2  -file3  spaces file1  spaces file2  spaces file3
+bandit5@bandit:~/inhere/maybehere07$ ls -l
+total 36
+-rwxr-x--- 1 root bandit5 3663 May  7  2020 -file1
+-rw-r----- 1 root bandit5 2488 May  7  2020 -file2
+-rwxr-x--- 1 root bandit5 3362 May  7  2020 -file3
+-rwxr-x--- 1 root bandit5 4130 May  7  2020 spaces file1
+-rw-r----- 1 root bandit5 9064 May  7  2020 spaces file2
+-rwxr-x--- 1 root bandit5 1022 May  7  2020 spaces file3
+bandit5@bandit:~/inhere/maybehere07$ file ./-file2 # verified file was ASCII
+./-file2: ASCII text, with very long lines
+bandit5@bandit:~/inhere/maybehere07$ cat .file2
+DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+
+```
+
+## Level 6
+
+The password for the next level is stored somewhere on the server and has all of the following properties:
+
+owned by user bandit7
+owned by group bandit6
+33 bytes in size
+
+**Commands you may need to solve this level**
+ls, cd, cat, file, du, find, grep
+
+### Approach
+
+Used a similar approach to level 5, man paged the `find ` command to find options for finding files by user and groups. Had to `cd ..` twice to access the entire server. Once there, i did the following.
+
+```bash
+bandit6@bandit:/$ find -size 33c -group bandit6 -user bandit7
+./var/lib/dpkg/info/bandit7.password                <--------------- location of file
+bandit6@bandit:/$ cd var/lib/dpkg/info/ # went to that files directory
+bandit6@bandit:/var/lib/dpkg/info$ find -size 33c -group bandit6 -user bandit7 # ran a search to confirm location
+./bandit7.password
+bandit6@bandit:/var/lib/dpkg/info$ cat ./bandit7.password # opened file to get flag, Booyah!
+HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
+
+```
+
+## Level 7
+
+The password for the next level is stored in the file **data.txt** next to the word millionth
+
+**Commands you may need to solve this level**
+grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+### Approach
+
+I know i'll want to use `grep` because it lets me search through a file. I though of a much easier solution... open the text file using `nano data.txt` then did ctrl + w to search for a word in file.
+
+**millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV**
+
+verified that method works, decided to check out grep some more and some of the other commands to find other ways to solve this problem (if i could not open a text editor).
+
+Tried the following commands:
+
+**strings**: strings - print the strings of printable characters in files.
+**grep**: grep, egrep, fgrep, rgrep - print lines matching a pattern
+
+Using grep to find the flag worked as well, and requires less typing. I used the following command
+
+```bash
+bandit7@bandit:~$ grep -e millionth data.txt # -e is the pattern to search for a pattern in the given file
+millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV 
+```
+
+## Level 8
+
+The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
+
+**Commands you may need to solve this level**
+grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Helpful Reading Material**
+[Piping and Redirection](https://ryanstutorials.net/linuxtutorial/piping.php)
+
+### Approach
+
+
+After diving into the sort and uniq commands i was able to find `sort` and `uniq -c`. The `uniq -c` command counts up all the lines in a file and gave a count for the number of occurrences found.
+
+```bash
+sort data.txt | uniq -c # the | (pipe) command allows me to take the output from one command and immediately insert it into another command
+```
+
+command will output several lines that have multiple occurrences but one that is unique as well.
+**UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR**
+
+## Level 9
+
+The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
+
+**Commands you may need to solve this level**
+grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+### Approach
+
+
+A similar approach to level 8 using `sort`, `grep`, and potentially `strings`.
+
+I figured i'd try and just run `strings data.txt` to see what strings were actually in the file that i could read. I noted an array of strings after several = characters. I tried that and it worked.
+
+**truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk**
+
+```
+x@nQ
+*SF=s
+}1:LF
+]vur
+Emlld
+&========== truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk # FLAG
+_Gmz
+\Uli,
+A5RK
+S'$0
+<4t",
+```
+
+## Level 10
+
+The password for the next level is stored in the file data.txt, which contains base64 encoded data
+
+**Commands you may need to solve this level**
+grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Helpful Reading Material**
+[Base64 on Wikipedia](https://en.wikipedia.org/wiki/Base64)
+
+### Approach
+
+
+Since the data.txt file was encoded with base64, I used the `base64 data.txt -d` command to decode the text file and ready the flag.
+
+```bash
+bandit10@bandit:~$ base64 data.txt -d
+The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+```
+
+## Level 10
+
+The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+
+**Commands you may need to solve this level**
+grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
+
+**Helpful Reading Material**
+[Rot13 on Wikipedia](https://en.wikipedia.org/wiki/Rot13)
+
+### Approach
+
+
