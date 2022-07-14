@@ -12,14 +12,14 @@ ls, cd, cat, file, du, find
 
 1. Use the man page on ssh and discovered how to use ssh to login.
 
-```bash
+```console
 ssh bandit0@bandit.labs.overthewire.org -p 2220
 ```
 Then login with the password: bandit0
 
 2. After gaining access, run the following commands to see what is available. Then use the cat command to read the readme file in the terminal to get the flag inside.
 
-```bash
+```console
 bandit0@bandit:~$ ls # shows all files in current directory
 readme
 bandit0@bandit:~$ cat readme # cat allows me to read a file in terminal
@@ -41,12 +41,12 @@ ls, cd, cat, file, du, find
 
 1. logged in using next bandit level with the password being the flag found from the previous challenge. **password: boJ9jbbUNNfktd78OOpsqOltutMc3MY1**
 
-```bash
+```console
 bandit1@bandit.labs.overthewire.org -p 2220
 ```
 2. Tried different ideas to figure out where the file was and how to access it. Not sure the reason yet but brute forcing my way through i was able to find the right command to show the flag.
 
-```bash
+```console
 bandit1@bandit:~$ ls # To see what files/dictionaries i can see
 -
 bandit1@bandit:~$ cat ./-
@@ -75,7 +75,7 @@ ls, cd, cat, file, du, find
 
 Ran typical directory reconnaissance to see what files were available. This file included spaces. I knew quotes join filenames with spaces.
 
-```bash
+```console
 bandit2@bandit:~$ ls # check to directory for files
 spaces in this filename
 bandit2@bandit:~$ file spaces\ in\ this\ filename # ran the file command to see what kind of file this was
@@ -96,7 +96,7 @@ ls, cd, cat, file, du, find
 
 Ran typical directory reconnaissance, since the file was hidden i used the `ls -a` command to show all files including hidden ones, then used the `cat` command to read it.
 
-```bash
+```console
 bandit3@bandit:~$ ls
 inhere
 bandit3@bandit:~$ cd inhere
@@ -117,7 +117,7 @@ ls, cd, cat, file, du, find
 
 Ran some reconnaissance on the directories, tried using `ls -h` since it mentioned something about human readability. Did nothing, so i tried using the `file ./filename` to get information on the file, output told me which files were just data and which one was readable.
 
-```bash
+```console
 bandit4@bandit:~/inhere$ ls -h
 -file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
 bandit4@bandit:~/inhere$ ls -h -l # not sure what this did
@@ -173,7 +173,7 @@ ls, cd, cat, file, du, find
 
 Based on the information provided above, i figured i had to run some sort of search using the `find` and `file` command.Running through the `find` man page i was able to find options to find the file based on the properties mentioned above.
 
-```bash
+```console
 bandit5@bandit:~/inhere$ find -size 1033c -readable # cmd looks for a file that is of 1033 bytes and readable and not executable
 bandit5@bandit:~/inhere$ cd maybehere07
 bandit5@bandit:~/inhere/maybehere07$ ls
@@ -208,7 +208,7 @@ ls, cd, cat, file, du, find, grep
 
 Used a similar approach to level 5, man paged the `find ` command to find options for finding files by user and groups. Had to `cd ..` twice to access the entire server. Once there, i did the following.
 
-```bash
+```console
 bandit6@bandit:/$ find -size 33c -group bandit6 -user bandit7
 ./var/lib/dpkg/info/bandit7.password                <--------------- location of file
 bandit6@bandit:/$ cd var/lib/dpkg/info/ # went to that files directory
@@ -241,7 +241,7 @@ Tried the following commands:
 
 Using grep to find the flag worked as well, and requires less typing. I used the following command
 
-```bash
+```console
 bandit7@bandit:~$ grep -e millionth data.txt # -e is the pattern to search for a pattern in the given file
 millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV 
 ```
@@ -261,7 +261,7 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 After diving into the sort and uniq commands i was able to find `sort` and `uniq -c`. The `uniq -c` command counts up all the lines in a file and gave a count for the number of occurrences found.
 
-```bash
+```console
 sort data.txt | uniq -c # the | (pipe) command allows me to take the output from one command and immediately insert it into another command
 ```
 
@@ -284,7 +284,7 @@ I figured i'd try and just run `strings data.txt` to see what strings were actua
 
 **truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk**
 
-```
+```console
 x@nQ
 *SF=s
 }1:LF
@@ -313,7 +313,7 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 Since the data.txt file was encoded with base64, I used the `base64 data.txt -d` command to decode the text file and ready the flag.
 
-```bash
+```console
 bandit10@bandit:~$ base64 data.txt -d
 The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 ```
@@ -332,7 +332,7 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 1. download hxtools in a seperate terminal to use rot13 cmd
 
-```bash
+```console
 bandit11@bandit:~$ ls
 data.txt
 bandit11@bandit:~$ cat data.txt
@@ -355,7 +355,7 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd, mkdir, cp, mv, fil
 
 ### Approach
 
-```bash
+```console
 mkdir /tmp/filename
 cp data.txt /tmp/filename
 cd /tmp/filename
@@ -367,8 +367,8 @@ flag.txt: gzip compressed data, was "data2.bin", last modified: Thu May  7 18:14
 ```
 Use the following sequence to go through and uncompress files using gunzip, bunzip2, and tar -xvf until you get and ACSII file again containing the password.
 
-```bash
-andit12@bandit:/tmp/k123$ file data8.bin
+```console
+bandit12@bandit:/tmp/k123$ file data8.bin
 data8.bin: gzip compressed data, was "data9.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
 bandit12@bandit:/tmp/k123$ mv data8.bin data8.gz
 bandit12@bandit:/tmp/k123$ gunzip data8.gz
