@@ -318,7 +318,7 @@ bandit10@bandit:~$ base64 data.txt -d
 The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 ```
 
-## Level 10
+## Level 11
 
 The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
 
@@ -330,4 +330,63 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
+1. download hxtools in a seperate terminal to use rot13 cmd
 
+```bash
+bandit11@bandit:~$ ls
+data.txt
+bandit11@bandit:~$ cat data.txt
+Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh
+
+echo "Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh" | rot13
+The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+```
+
+## Level 12
+
+**Level Goal**
+The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+**Commands you may need to solve this level**
+grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd, mkdir, cp, mv, file
+
+**Helpful Reading Material**
+[Hex dump on Wikipedia](https://en.wikipedia.org/wiki/Hex_dump)
+
+### Approach
+
+```bash
+mkdir /tmp/filename
+cp data.txt /tmp/filename
+cd /tmp/filename
+
+bandit12@bandit:/tmp/k123$ man xxd
+bandit12@bandit:/tmp/k123$ xxd -r data.txt > flag.txt
+bandit12@bandit:/tmp/k123$ file flag.txt
+flag.txt: gzip compressed data, was "data2.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
+```
+Use the following sequence to go through and uncompress files using gunzip, bunzip2, and tar -xvf until you get and ACSII file again containing the password.
+
+```bash
+andit12@bandit:/tmp/k123$ file data8.bin
+data8.bin: gzip compressed data, was "data9.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
+bandit12@bandit:/tmp/k123$ mv data8.bin data8.gz
+bandit12@bandit:/tmp/k123$ gunzip data8.gz
+bandit12@bandit:/tmp/k123$ file data8
+data8: ASCII text
+bandit12@bandit:/tmp/k123$ cat data8
+The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+```
+
+## Level 13
+
+**Level Goal**
+The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
+
+**Commands you may need to solve this level**
+ssh, telnet, nc, openssl, s_client, nmap
+
+**Helpful Reading Material**
+[SSH/OpenSSH/Keys](https://help.ubuntu.com/community/SSH/OpenSSH/Keys)
+
+### Approach
