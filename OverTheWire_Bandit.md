@@ -390,3 +390,23 @@ ssh, telnet, nc, openssl, s_client, nmap
 [SSH/OpenSSH/Keys](https://help.ubuntu.com/community/SSH/OpenSSH/Keys)
 
 ### Approach
+
+```console
+bandit13@bandit:~$ ssh bandit14@localhost -i sshkey.private
+
+bandit14@bandit:~$ whoami
+bandit14
+bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
+4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+```
+
+## Level 14
+
+**Level Goal**
+The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
+
+**Commands you may need to solve this level**
+ssh, telnet, nc, openssl, s_client, nmap
+
+### Approach
+
