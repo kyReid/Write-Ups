@@ -26,7 +26,7 @@ bandit0@bandit:~$ cat readme # cat allows me to read a file in terminal
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 ```
 
-## Level 1
+## Level 1 -> 2
 
 The password for the next level is stored in a file called **-** located in the home directory.
 
@@ -60,7 +60,7 @@ With bash redirection, - is not recognized as a special filename, so bash will u
 
 When cat sees the string `-` as a filename, it treats it as a synonym for stdin. To get around this, you need to alter the string that cat sees in such a way that it still refers to a file called `-.` The usual way of doing this is to prefix the filename with a path `./-,` or `/home/Tim/-.` This technique is also used to get around similar issues where command line options clash with filenames, so a file referred to as `./-e` does not appear as the `-e` command line option to a program.Both **cat < -** and **./-** command will give you the output
 
-## Level 2
+## Level 2 -> 3
 
 
 The password for the next level is stored in a file called spaces in this filename located in the home directory
@@ -84,7 +84,7 @@ bandit2@bandit:~$ cat 'spaces in this filename' # used quotes to wrap the filena
 UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 ```
 
-## Level 3
+## Level 3 -> 4
 
 
 The password for the next level is stored in a **hidden file** in the **inhere** directory.
@@ -106,7 +106,7 @@ bandit3@bandit:~/inhere$ cat .hidden
 pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 ```
 
-## Level 4
+## Level 4 -> 5
 
 The password for the next level is stored in the **only human-readable file in the inhere directory**. Tip: if your terminal is messed up, try the “reset” command.
 
@@ -158,7 +158,7 @@ bandit4@bandit:~/inhere$ cat ./-file07
 koReBOKuIDDepwhWk7jZC0RTdopnAYKh
 ```
 
-## Level 5
+## Level 5 -> 6
 
 The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
 
@@ -193,7 +193,7 @@ DXjZPULLxYr17uwoI01bNLQbtFemEgo7
 
 ```
 
-## Level 6
+## Level 6 -> 7
 
 The password for the next level is stored somewhere on the server and has all of the following properties:
 
@@ -219,7 +219,7 @@ HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 
 ```
 
-## Level 7
+## Level 7 -> 8
 
 The password for the next level is stored in the file **data.txt** next to the word millionth
 
@@ -246,7 +246,7 @@ bandit7@bandit:~$ grep -e millionth data.txt # -e is the pattern to search for a
 millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV 
 ```
 
-## Level 8
+## Level 8 -> 9
 
 The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
 
@@ -268,7 +268,7 @@ sort data.txt | uniq -c # the | (pipe) command allows me to take the output from
 command will output several lines that have multiple occurrences but one that is unique as well.
 **UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR**
 
-## Level 9
+## Level 9 -> 10
 
 The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
 
@@ -298,7 +298,7 @@ S'$0
 <4t",
 ```
 
-## Level 10
+## Level 10 -> 11
 
 The password for the next level is stored in the file data.txt, which contains base64 encoded data
 
@@ -318,7 +318,7 @@ bandit10@bandit:~$ base64 data.txt -d
 The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 ```
 
-## Level 11
+## Level 11 -> 12
 
 The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
 
@@ -342,7 +342,7 @@ echo "Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh" | rot13
 The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
 ```
 
-## Level 12
+## Level 12 -> 13
 
 **Level Goal**
 The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
@@ -378,7 +378,7 @@ bandit12@bandit:/tmp/k123$ cat data8
 The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 ```
 
-## Level 13
+## Level 13 -> 14
 
 **Level Goal**
 The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
@@ -400,7 +400,7 @@ bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
 ```
 
-## Level 14
+## Level 14 -> 15
 
 **Level Goal**
 The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
@@ -410,3 +410,166 @@ ssh, telnet, nc, openssl, s_client, nmap
 
 ### Approach
 
+Checked out Netcat usage on the man page and found that using the following command and pasting in the previous password i was able to find the flag.
+
+```console
+bandit14@bandit:~$ nc localhost 30000
+4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+Correct!
+BfMYroe26WYalil77FoDi9qh59eK5xNr
+```
+
+## Level 15 -> 16
+
+The password for the next level can be retrieved by submitting the password of the current level to **port 30001 on localhost** using SSL encryption.
+
+**Helpful note: Getting “HEARTBEATING” and “Read R BLOCK”? Use -ign_eof and read the “CONNECTED COMMANDS” section in the manpage. Next to ‘R’ and ‘Q’, the ‘B’ command also works in this version of that command…**
+
+**Commands you may need to solve this level**
+ssh, telnet, nc, openssl, s_client, nmap
+
+**Helpful Reading Material**
+[Secure Socket Layer/Transport Layer Security on Wikipedia](https://en.wikipedia.org/wiki/Secure_Socket_Layer)
+[OpenSSL Cookbook - Testing with OpenSSL](https://www.feistyduck.com/library/openssl-cookbook/online/ch-testing-with-openssl.html)
+
+### Approach
+
+Based on available information i ran a man cmd on openssl and noticed s_client could be useful. I then ran a man cmd on openssl s_client and found the -connect option. So i tried the following command to get the flag.
+
+```console
+bandit15@bandit:~$ openssl s_client -connect localhost:30001
+<!-- a block of text was returned to me with some connection information. I then pasted the previous flag and got..-->
+---
+BfMYroe26WYalil77FoDi9qh59eK5xNr
+Correct!
+cluFn7wTiGryunymYOu4RcffSxQluehd
+```
+
+## Level 16 -> 17
+
+**Level Goal**
+The credentials for the next level can be retrieved by submitting the password of the current level to **a port on localhost in the range 31000 to 32000**. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
+
+**Commands you may need to solve this level**
+ssh, telnet, nc, openssl, s_client, nmap
+
+**Helpful Reading Material**
+[Port scanner on Wikipedia](https://en.wikipedia.org/wiki/Port_scanner)
+
+### Approach
+
+I noted port scanning in the helpful reading section and decided to run an nmap scan on localhost
+
+```console
+bandit16@bandit:~$ nmap localhost -p31000-32000
+
+Starting Nmap 7.40 ( https://nmap.org ) at 2022-08-11 14:34 CEST
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00025s latency).
+Not shown: 996 closed ports
+PORT      STATE    SERVICE
+31046/tcp open     unknown
+31518/tcp filtered unknown
+31691/tcp open     unknown
+31790/tcp open     unknown
+31960/tcp open     unknown
+```
+
+I then used openssl to try to connect to one of those ports and found port 31790 to be the correct one
+
+```console
+bandit16@bandit:~$ openssl s_client -connect localhost:31790
+.
+.
+.
+---
+cluFn7wTiGryunymYOu4RcffSxQluehd entered password and recieved an RSA private key
+Correct!
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
+```
+
+I saved the key to a file in a new folder in the tmp directory. Then i used chmod 600 to set permissions only to myself. Afterwards i used ssh to gain access to the next level.
+
+```console
+bandit16@bandit:/tmp/kyle$ chmod 600 bandit17
+
+bandit16@bandit:/tmp/kyle$ ssh -i bandit17 bandit17@localhost
+```
+
+## Level 17 -> 18
+
+**Level Goal**
+There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+
+**NOTE: if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19**
+
+**Commands you may need to solve this level**
+cat, grep, ls, diff
+
+### Approach
+
+I noticed the diff cmd in the hint for the level so i tried it. Since i'm looking for the change in password.new the top password is the correct one.
+
+```console
+bandit17@bandit:~$ diff passwords.new passwords.old
+42c42
+< kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
+---
+> w0Yfolrc5bwjS4qw5mq1nnQi6mF03bii
+```
+
+## Level 18 -> 19
+
+**Level Goal**
+The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
+
+**Commands you may need to solve this level**
+ssh, ls, cat
+
+### Approach
+
+The ssh cmd allows me to also give it a command that will execute on the remote host instead of a login shell.
+
+```console
+└─$ ssh bandit18@bandit.labs.overthewire.org -p 2220 "cat readme"
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit18@bandit.labs.overthewire.org's password: 
+IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
+```
+
+## Level 19 -> 20
+
+**Level Goal**
+To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
+
+**Helpful Reading Material**
+[setuid on Wikipedia](https://en.wikipedia.org/wiki/Setuid)
+
+### Approach
