@@ -611,3 +611,59 @@ connect to [127.0.0.1] from localhost [127.0.0.1] 54966
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
 ```
+
+## Level 21 -> 22
+
+**Level Goal**
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+**NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.**
+
+**Commands you may need to solve this level**
+cron, crontab, crontab(5) (use “man 5 crontab” to access this)
+
+### Approach
+
+Based on the hint, i checked out the cron.d folder and ran the `cat` cmd on several files following the trail until i got to the flag.
+
+```console
+bandit21@bandit:~$ cd /etc/cron.d
+bandit21@bandit:/etc/cron.d$ ls
+cronjob_bandit15_root  cronjob_bandit22  cronjob_bandit24
+cronjob_bandit17_root  cronjob_bandit23  cronjob_bandit25_root
+bandit21@bandit:/etc/cron.d$ ls -la
+total 36
+drwxr-xr-x  2 root root 4096 Jul 11  2020 .
+drwxr-xr-x 87 root root 4096 May 14  2020 ..
+-rw-r--r--  1 root root   62 May 14  2020 cronjob_bandit15_root
+-rw-r--r--  1 root root   62 Jul 11  2020 cronjob_bandit17_root
+-rw-r--r--  1 root root  120 May  7  2020 cronjob_bandit22
+-rw-r--r--  1 root root  122 May  7  2020 cronjob_bandit23
+-rw-r--r--  1 root root  120 May 14  2020 cronjob_bandit24
+-rw-r--r--  1 root root   62 May 14  2020 cronjob_bandit25_root
+-rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
+bandit21@bandit:/etc/cron.d$ cat cronjob_bandit22
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+bandit21@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit22.sh
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+bandit21@bandit:/etc/cron.d$ cat  /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+```
+
+## Level 22 -> 23
+
+**Level Goal**
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+**NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!**
+
+**NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…**
+
+**Commands you may need to solve this level**
+cron, crontab, crontab(5) (use “man 5 crontab” to access this)
+
+### Approach
+
