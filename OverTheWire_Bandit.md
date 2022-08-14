@@ -592,3 +592,22 @@ NOTE: Try connecting to your own network daemon to see if it works as you think
 ssh, nc, cat, bash, screen, tmux, Unix ‘job control’ (bg, fg, jobs, &, CTRL-Z, …)
 
 ### Approach
+
+I opened a second terminal and ssh'd into bandit20. Once inside i ran `nc -lv -p 8080` to create a local connection on port 8080 to listen to in verbose mode. On my main terminal i connected to my local connection on port 8080 by doing `./suconnect 8080`. On terminal 2 i pasted bandit20s password and recieved bandit 21s password on my main terminal.
+
+```console
+<!-- main terminal -->
+bandit20@bandit:~$ ./suconnect 8080
+GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+Read: GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+Password matches, sending next password
+bandit20@bandit:~$ GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+
+
+<!-- 2nd terminal -->
+bandit20@bandit:~$ nc -lv -p 8080
+listening on [any] 8080 ...
+connect to [127.0.0.1] from localhost [127.0.0.1] 54966
+GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
+```
