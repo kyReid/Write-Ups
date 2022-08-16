@@ -26,6 +26,8 @@ bandit0@bandit:~$ cat readme # cat allows me to read a file in terminal
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 ```
 
+Flag: boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+
 ## Level 1 -> 2
 
 The password for the next level is stored in a file called **-** located in the home directory.
@@ -60,6 +62,8 @@ With bash redirection, - is not recognized as a special filename, so bash will u
 
 When cat sees the string `-` as a filename, it treats it as a synonym for stdin. To get around this, you need to alter the string that cat sees in such a way that it still refers to a file called `-.` The usual way of doing this is to prefix the filename with a path `./-,` or `/home/Tim/-.` This technique is also used to get around similar issues where command line options clash with filenames, so a file referred to as `./-e` does not appear as the `-e` command line option to a program.Both **cat < -** and **./-** command will give you the output
 
+Flag: CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+
 ## Level 2 -> 3
 
 
@@ -83,6 +87,7 @@ spaces in this filename: ASCII text
 bandit2@bandit:~$ cat 'spaces in this filename' # used quotes to wrap the filename so it joined the spaces together to ready the file.
 UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 ```
+Flag:UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 
 ## Level 3 -> 4
 
@@ -105,6 +110,8 @@ bandit3@bandit:~/inhere$ ls -a # the -a allows you to see all objects even those
 bandit3@bandit:~/inhere$ cat .hidden
 pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 ```
+
+Flag:pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 
 ## Level 4 -> 5
 
@@ -158,6 +165,8 @@ bandit4@bandit:~/inhere$ cat ./-file07
 koReBOKuIDDepwhWk7jZC0RTdopnAYKh
 ```
 
+Flag:koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+
 ## Level 5 -> 6
 
 The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
@@ -193,6 +202,8 @@ DXjZPULLxYr17uwoI01bNLQbtFemEgo7
 
 ```
 
+Flag: DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+
 ## Level 6 -> 7
 
 The password for the next level is stored somewhere on the server and has all of the following properties:
@@ -218,6 +229,8 @@ bandit6@bandit:/var/lib/dpkg/info$ cat ./bandit7.password # opened file to get f
 HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 
 ```
+
+Flag: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 
 ## Level 7 -> 8
 
@@ -246,6 +259,8 @@ bandit7@bandit:~$ grep -e millionth data.txt # -e is the pattern to search for a
 millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV 
 ```
 
+Flag:cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+
 ## Level 8 -> 9
 
 The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
@@ -266,7 +281,8 @@ sort data.txt | uniq -c # the | (pipe) command allows me to take the output from
 ```
 
 command will output several lines that have multiple occurrences but one that is unique as well.
-**UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR**
+
+FLag:UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
 
 ## Level 9 -> 10
 
@@ -290,13 +306,15 @@ x@nQ
 }1:LF
 ]vur
 Emlld
-&========== truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk # FLAG
+&========== truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
 _Gmz
 \Uli,
 A5RK
 S'$0
 <4t",
 ```
+
+Flag:truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
 
 ## Level 10 -> 11
 
@@ -317,6 +335,8 @@ Since the data.txt file was encoded with base64, I used the `base64 data.txt -d`
 bandit10@bandit:~$ base64 data.txt -d
 The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 ```
+
+Flag:IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 
 ## Level 11 -> 12
 
@@ -341,6 +361,8 @@ Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh
 echo "Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh" | rot13
 The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
 ```
+
+Flag:5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
 
 ## Level 12 -> 13
 
@@ -378,6 +400,8 @@ bandit12@bandit:/tmp/k123$ cat data8
 The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 ```
 
+Flag:8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+
 ## Level 13 -> 14
 
 **Level Goal**
@@ -400,6 +424,8 @@ bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
 ```
 
+Flag:4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+
 ## Level 14 -> 15
 
 **Level Goal**
@@ -418,6 +444,8 @@ bandit14@bandit:~$ nc localhost 30000
 Correct!
 BfMYroe26WYalil77FoDi9qh59eK5xNr
 ```
+
+Flag:BfMYroe26WYalil77FoDi9qh59eK5xNr
 
 ## Level 15 -> 16
 
@@ -444,6 +472,8 @@ BfMYroe26WYalil77FoDi9qh59eK5xNr
 Correct!
 cluFn7wTiGryunymYOu4RcffSxQluehd
 ```
+
+Flag:cluFn7wTiGryunymYOu4RcffSxQluehd
 
 ## Level 16 -> 17
 
@@ -544,6 +574,8 @@ bandit17@bandit:~$ diff passwords.new passwords.old
 > w0Yfolrc5bwjS4qw5mq1nnQi6mF03bii
 ```
 
+Flag:kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
+
 ## Level 18 -> 19
 
 **Level Goal**
@@ -564,6 +596,8 @@ bandit18@bandit.labs.overthewire.org's password:
 IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
 ```
 
+Flag:IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
+
 ## Level 19 -> 20
 
 **Level Goal**
@@ -580,6 +614,8 @@ After some digging, I realized that using the ./bandit20-do with a cmd executes 
 bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 ```
+
+Flag:GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 
 ## Level 20 -> 21
 
@@ -611,6 +647,8 @@ connect to [127.0.0.1] from localhost [127.0.0.1] 54966
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
 ```
+
+Flag: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
 
 ## Level 21 -> 22
 
@@ -652,6 +690,8 @@ cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 bandit21@bandit:/etc/cron.d$ cat  /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 ```
+
+Flag: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 
 ## Level 22 -> 23
 
@@ -699,8 +739,9 @@ bandit22@bandit:/etc/cron.d$ echo I am user bandit23 | md5sum | cut -d ' ' -f 1
 bandit22@bandit:/etc/cron.d$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
 jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 ```
+Flag: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 
-## Level 23-> 24
+## Level 23 -> 24
 
 **Level Goal**
 A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
@@ -713,3 +754,27 @@ cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
+Really have no clue how the script under `bandit23@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh` relates to anything else. I created a bash script in a tmp folder and created the following script...
+```bash
+myname=bandit24
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+cat /tmp/$mytarget
+```
+Instead of running the script with the current user i ran it as if i was bandit24. AFter updating the permissions and running the script i got the flag.
+```console
+bandit23@bandit:/tmp/kyle$ ./script.sh
+Copying passwordfile /etc/bandit_pass/bandit24 to /tmp/ee4ee1703b083edac9f8183e4ae70293
+./script.sh: line 8: /tmp/ee4ee1703b083edac9f8183e4ae70293: Permission denied
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+```
+
+Flag: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+
+## Level 24 -> 25
+
+**Level Goal**
+A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
