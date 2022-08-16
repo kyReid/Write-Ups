@@ -816,3 +816,24 @@ A daemon is listening on port 30002 and will give you the password for bandit25 
 
 ### Approach
 
+I went ahead and created a new script that did the following
+```bash
+#!/bin/bash
+
+password="UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ"
+
+for i in {0000..9999}
+do
+    echo $password $i
+done
+```
+After that i output the results to a txt file and then i connected to the localhost `nc localhost 30002` and redirected the output from the text file to the request from the connection.
+
+```console
+bandit24@bandit:nc lkocalhost 30002 < output.txt
+...
+Correct!
+The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+```
+
+Flag: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
