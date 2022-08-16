@@ -696,6 +696,7 @@ Flag: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 ## Level 22 -> 23
 
 **Level Goal**
+
 A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
 
 **NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.**
@@ -744,6 +745,7 @@ Flag: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 ## Level 23 -> 24
 
 **Level Goal**
+
 A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
 
 **NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!**
@@ -754,7 +756,28 @@ cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
-Really have no clue how the script under `bandit23@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh` relates to anything else. I created a bash script in a tmp folder and created the following script...
+Really have no clue how the script under `bandit23@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh` :
+```bash
+#!/bin/bash
+
+myname=$(whoami) # figures out the current owner
+
+cd /var/spool/$myname # goes to this directory in order to execute cmd
+echo "Executing and deleting all scripts in /var/spool/$myname:" 
+for i in * .*; # for each index that is of any name . any file extension
+do
+    if [ "$i" != "." -a "$i" != ".." ]; # as long as its not the parent or child directory
+    then # do some things with the current file
+        echo "Handling $i"
+        owner="$(stat --format "%U" ./$i)"
+        if [ "${owner}" = "bandit23" ]; then
+            timeout -s 9 60 ./$i
+        fi
+        rm -f ./$i # remove file
+    fi
+done
+```
+relates to anything else. I created a bash script in a tmp folder and created the following script...
 ```bash
 myname=bandit24
 mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
@@ -774,7 +797,22 @@ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
 
 Flag: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
 
+**Additional Research**
+I looked at other sources for how they got the flag and noticed that information in the cronjob_bandit24.sh script can be used to execute a command.Using the following script and updating privileges using `chmod 777 [script filename]`
+
+```bash
+#!/bin/bash
+
+cat /etc/bandit_pass/bandit24 > /tmp/[temp dict name]/password.txt
+```
+
+Since the original cronjob executes minute by minute, if the script is executed and you wait a minute the password.txt file will show up in the tmp folder, if you cat into that file from the var/spool directory you will get the flag.
+
 ## Level 24 -> 25
 
 **Level Goal**
+
 A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+
+### Approach
+
