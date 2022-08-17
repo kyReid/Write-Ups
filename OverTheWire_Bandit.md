@@ -837,3 +837,392 @@ The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 ```
 
 Flag: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+
+## Level 25 -> 26
+
+**Level Goal**
+Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+**Commands you may need to solve this level**
+ssh, cat, more, vi, ls, id, pwd
+
+### Approach
+
+in the home directory i found an sshkey that i used to try to connect to bandit26  `ssh -i bandit26.sshkey bandit26@localhost`. Connection closes out instantly with no shell. I check out the `/etc/passwd` file to see file store information. I noticed bandit26 isn't `/bin/bash` but `/usr/bin/showtext`.  I ran the file cmd to see whta it was and then i ran the cat cmd to see what type of script it was. Using the more cmd i can execute commands on the connection page to show more(I have to zoom in really close on the terminal to have the ability to execute on the more cmd). On the more man page is talks about using the v cmd to enter edit mode, once inside the vim editor i dod `:r /etc/bandit_pass/bandit26` and got the flag.
+
+Flag:  5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z 
+
+Level 26 → Level 27
+
+**Level Goal**
+Good job getting a shell! Now hurry and grab the password for bandit27!
+
+**Commands you may need to solve this level**
+ls
+
+### Approach
+
+Similar approach to the previous level, however now that your in the editor you want to run a few commands in order to find the flag.
+```console
+:set shell=/bin/bash #change the type of shell used
+:!ls -la #list the files in the directory
+total 36
+drwxr-xr-x  3 root     root     4096 Oct 16 14:00 .
+drwxr-xr-x 41 root     root     4096 Oct 16 14:00 ..
+-rwsr-x---  1 bandit27 bandit26 7296 Oct 16 14:00 bandit27-do
+-rw-r--r--  1 root     root      220 May 15  2017 .bash_logout
+-rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
+-rw-r--r--  1 root     root      675 May 15  2017 .profile
+drwxr-xr-x  2 root     root     4096 Oct 16 14:00 .ssh
+-rw-r-----  1 bandit26 bandit26  258 Oct 16 14:00 text.txt
+:!./bandit27-do cat /etc/bandit_pass/bandit27 #bandit27-do is similar to sunconnect from a previous level where it can be used to access the information restricted to a user.                                                                   
+3ba3118a22e93127a4ed485be72ef5ea
+```
+
+Flag: 3ba3118a22e93127a4ed485be72ef5ea
+
+# Level 27 -> 28
+
+**Level Goal**
+There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.
+
+Clone the repository and find the password for the next level.
+
+**Commands you may need to solve this level**
+git
+
+### Approach
+
+using the git clone cmd i'm able to download the repo and access it. I first make a tmp directory and cd into it. Once inside i run `bandit27@bandit:/tmp/kyle2$ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo`.
+
+```console
+bandit27@bandit:/tmp/kyle2$ ls
+repo
+bandit27@bandit:/tmp/kyle2$ ls -la repo
+total 16
+drwxr-sr-x 3 bandit27 root 4096 Aug 17 00:19 .
+drwxr-sr-x 3 bandit27 root 4096 Aug 17 00:19 ..
+drwxr-sr-x 8 bandit27 root 4096 Aug 17 00:19 .git
+-rw-r--r-- 1 bandit27 root   68 Aug 17 00:19 README
+bandit27@bandit:/tmp/kyle2$ cd repo
+bandit27@bandit:/tmp/kyle2/repo$ ls
+README
+bandit27@bandit:/tmp/kyle2/repo$ cat README
+The password to the next level is: 0ef186ac70e04ea33b4c1853d2526fa2
+```
+
+Flag: 0ef186ac70e04ea33b4c1853d2526fa2
+
+# Level 27 -> 28
+
+**Level Goal**
+There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.
+
+Clone the repository and find the password for the next level.
+
+**Commands you may need to solve this level**
+git
+
+### Approach
+
+CLone the repo to a tmp work space then check the readme file, noticed the password was not visible. ran git log to see changes to the repo and then used git show with the commit hash to go back to a previous commit to uncover the password.
+
+```console
+bandit28@bandit:/tmp/kyle10$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+...
+bandit28@bandit:/tmp/kyle10$ ls
+repo
+bandit28@bandit:/tmp/kyle10$ cd repo
+bandit28@bandit:/tmp/kyle10/repo$ ls
+README.md
+bandit28@bandit:/tmp/kyle10/repo$ cat README.md 
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+
+bandit28@bandit:/tmp/kyle10/repo$ git log
+commit edd935d60906b33f0619605abd1689808ccdd5ee
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    fix info leak
+
+commit c086d11a00c0648d095d04c089786efef5e01264
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    add missing data
+
+commit de2ebe2d5fd1598cd547f4d56247e053be3fdc38
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    initial commit of README.md
+bandit28@bandit:/tmp/kyle10/repo$ git show c086d11a00c0648d095d04c089786efef5e01264
+commit c086d11a00c0648d095d04c089786efef5e01264
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    add missing data
+
+diff --git a/README.md b/README.md
+index 7ba2d2f..3f7cee8 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+ ## credentials
+ 
+ - username: bandit29
+-- password: <TBD>
++- password: bbc96594b4e001778eee9975372716b2
+```
+
+Flag: bbc96594b4e001778eee9975372716b2
+
+Level 29 → Level 30
+**Level Goal**
+There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo. The password for the user bandit29-git is the same as for the user bandit29.
+
+Clone the repository and find the password for the next level.
+
+**Commands you may need to solve this level**
+git
+
+### Approach
+
+This involves working through branches. Notice that the current master branch doesn't have anything for us so we check for other branches using `git branch -a` I then checked out a different branch using `git checkout remotes/origin/dev`. I ran gitt log and noticed data was added for development. Ran `git show` on that commit hash and got the flag.
+
+```commit
+bandit29@bandit:/tmp/kyle11/repo$ cat README.md 
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: <no passwords in production!>
+
+bandit29@bandit:/tmp/kyle11/repo$ git branch
+* master
+bandit29@bandit:/tmp/kyle11/repo$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/dev
+  remotes/origin/master
+  remotes/origin/sploits-dev
+bandit29@bandit:/tmp/kyle11/repo$ git checkout remotes/origin/dev
+Note: checking out 'remotes/origin/dev'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at bc83328... add data needed for development
+bandit29@bandit:/tmp/kyle11/repo$ git log
+commit bc833286fca18a3948aec989f7025e23ffc16c07
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:52 2020 +0200
+
+    add data needed for development
+
+commit 8e6c203f885bd4cd77602f8b9a9ea479929ffa57
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:51 2020 +0200
+
+    add gif2ascii
+
+commit 208f463b5b3992906eabf23c562eda3277fea912
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:51 2020 +0200
+
+    fix username
+
+commit 18a6fd6d5ef7f0874bbdda2fa0d77b3b81fd63f7
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:51 2020 +0200
+
+    initial commit of README.md
+bandit29@bandit:/tmp/kyle11/repo$ git show bc833286fca18a3948aec989f7025e23ffc16c07
+commit bc833286fca18a3948aec989f7025e23ffc16c07
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:52 2020 +0200
+
+    add data needed for development
+
+diff --git a/README.md b/README.md
+index 1af21d3..39b87a8 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for bandit30 of bandit.
+ ## credentials
+ 
+ - username: bandit30
+-- password: <no passwords in production!>
++- password: 5b90576bedb2cc04c86a9e924ce42faf
+```
+
+Flag: 5b90576bedb2cc04c86a9e924ce42faf
+
+Level 30 → Level 31
+
+**Level Goal**
+There is a git repository at ssh://bandit30-git@localhost/home/bandit30-git/repo. The password for the user bandit30-git is the same as for the user bandit30.
+
+Clone the repository and find the password for the next level.
+
+**Commands you may need to solve this level**
+git
+
+### Approach
+
+Tried all the various methods prior and nothing changed. went into the .git directory and checked out the packer-ref file, noticed a different commit hash, tried it out and found the flag.
+
+```console
+bandit30@bandit:~$ mkdir /tmp/kyle12; cd /tmp/kyle12;git clone ssh://bandit30-git@localhost/home/bandit30-git/repo; cd repo
+Cloning into 'repo'...
+bandit30@bandit:/tmp/kyle12/repo$ ls
+README.md
+bandit30@bandit:/tmp/kyle12/repo$ cat README.md 
+just an epmty file... muahaha
+bandit30@bandit:/tmp/kyle12/repo$ git show
+commit 3aefa229469b7ba1cc08203e5d8fa299354c496b
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:54 2020 +0200
+
+    initial commit of README.md
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..029ba42
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1 @@
++just an epmty file... muahaha
+bandit30@bandit:/tmp/kyle12/repo$ git branch -a
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+bandit30@bandit:/tmp/kyle12/repo$ git branch
+* master
+bandit30@bandit:/tmp/kyle12/repo$ ls -la
+total 16
+drwxr-sr-x 3 bandit30 root 4096 Aug 17 03:39 .
+drwxr-sr-x 3 bandit30 root 4096 Aug 17 03:38 ..
+drwxr-sr-x 8 bandit30 root 4096 Aug 17 03:39 .git
+-rw-r--r-- 1 bandit30 root   30 Aug 17 03:39 README.md
+bandit30@bandit:/tmp/kyle12/repo$ cd .git
+bandit30@bandit:/tmp/kyle12/repo/.git$ ls
+branches  config  description  HEAD  hooks  index  info  logs  objects  packed-refs  refs
+bandit30@bandit:/tmp/kyle12/repo/.git$ cat config
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = ssh://bandit30-git@localhost/home/bandit30-git/repo
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+bandit30@bandit:/tmp/kyle12/repo/.git$ cat packed-refs 
+# pack-refs with: peeled fully-peeled 
+3aefa229469b7ba1cc08203e5d8fa299354c496b refs/remotes/origin/master
+f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea refs/tags/secret
+bandit30@bandit:/tmp/kyle12/repo/.git$ git show f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea
+47e603bb428404d265f59c42920d81e5
+```
+
+Flag:47e603bb428404d265f59c42920d81e5
+
+Level 31 → Level 32
+**Level Goal**
+There is a git repository at ssh://bandit31-git@localhost/home/bandit31-git/repo. The password for the user bandit31-git is the same as for the user bandit31.
+
+Clone the repository and find the password for the next level.
+
+**Commands you may need to solve this level**
+git
+
+### Approach
+
+```console
+bandit31@bandit:~$ mkdir /tmp/kyle13
+bandit31@bandit:~$ cd /tmp/kyle13
+bandit31@bandit:/tmp/kyle13$ git clone ssh://bandit31-git@localhost/home/bandit31-git/repo
+Cloning into 'repo'...
+bandit31@bandit:/tmp/plop12345$ cd repo/
+bandit31@bandit:/tmp/plop12345/repo$ ls
+README.md
+bandit31@bandit:/tmp/kyle13/repo$ cat README.md 
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+
+bandit31@bandit:/tmp/kyle13/repo$ echo "May I come in?">key.txt
+bandit31@bandit:/tmp/kyle13/repo$ git add -f key.txt
+bandit31@bandit:/tmp/kyle13/repo$ git commit -m key.txt
+[master 1e7c122] key.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 key.txt
+bandit31@bandit:/tmp/kyle13/repo$ git push origin master
+bandit31-git@localhost password: 
+
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 320 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+remote: ### Attempting to validate files... ####
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+remote: Well done! Here is the password for the next level:
+remote: 56a9bf19c63d650ce78e6ec0354ee45e
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+To ssh://localhost/home/bandit31-git/repo
+ ! [remote rejected] master -> master (pre-receive hook declined)
+error: failed to push some refs to 'ssh://bandit31-git@localhost/home/bandit31-git/repo'
+```
+
+Flag: 56a9bf19c63d650ce78e6ec0354ee45e
+
+Level 32 → Level 33
+
+After all this git stuff its time for another escape. Good luck!
+
+**Commands you may need to solve this level**
+sh, man
+
+### Approach
+
+get an interactive shell by inserting $0 in the fake shell, then we run vim end read the password for the next level.
+
+```console
+WELCOME TO THE UPPERCASE SHELL
+>> ls
+sh: 1: LS: not found
+>> $0
+$ vim
+
+# In vim enter the following command :
+# :r /etc/bandit_pass/bandit33
+
+c9c3199ddf4121b10cf581a98d51caee
+```
+
+Flag: c9c3199ddf4121b10cf581a98d51caee
