@@ -1,34 +1,34 @@
-# Wargame: Bandit
+# OverTheWire Wargame: Bandit
 
-## Level 0
+>The Bandit wargame is aimed at absolute beginners. It will teach the basics needed to be able to play other wargames.
+
+> Completed: 08/16/2022
+
+## Level 0 to 1
 
 The password for the next level is stored in a file called **readme** located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
 
 **Commands you may need to solve this level**
-
 ls, cd, cat, file, du, find
 
 ### Approach
 
-1. Use the man page on ssh and discovered how to use ssh to login.
+I used the `ssh` cmd to log in to the shell. I then used the `ls` cmd to see what files were in the home directory. Using the `cat` cmd I was able to read what was inside the file.
 
 ```console
 ssh bandit0@bandit.labs.overthewire.org -p 2220
-```
-Then login with the password: bandit0
 
-2. After gaining access, run the following commands to see what is available. Then use the cat command to read the readme file in the terminal to get the flag inside.
-
-```console
 bandit0@bandit:~$ ls # shows all files in current directory
 readme
 bandit0@bandit:~$ cat readme # cat allows me to read a file in terminal
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 ```
 
-Flag: boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+**Flag: boJ9jbbUNNfktd78OOpsqOltutMc3MY1**
 
-## Level 1 -> 2
+---
+
+## Level 1 to 2
 
 The password for the next level is stored in a file called **-** located in the home directory.
 
@@ -41,33 +41,29 @@ ls, cd, cat, file, du, find
 
 ### Approach
 
-1. logged in using next bandit level with the password being the flag found from the previous challenge. **password: boJ9jbbUNNfktd78OOpsqOltutMc3MY1**
+I used the `ls` cmd and noticed only one object in the home directory. I used the `cat` and `./` cmd on the object to access it.
 
 ```console
-bandit1@bandit.labs.overthewire.org -p 2220
-```
-2. Tried different ideas to figure out where the file was and how to access it. Not sure the reason yet but brute forcing my way through i was able to find the right command to show the flag.
-
-```console
-bandit1@bandit:~$ ls # To see what files/dictionaries i can see
+bandit1@bandit:~$ ls 
 -
 bandit1@bandit:~$ cat ./-
 CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
 ```
 
-**After doing additional research:**
+**Side Note**
 Using `-` as a filename to mean stdin/stdout is a convention that a lot of programs use. It is not a special property of the filename. The kernel does not recognize `-` as special so any system calls referring to `-` as a filename will use `-` literally as the filename.
 
 With bash redirection, - is not recognized as a special filename, so bash will use that as the literal filename.
 
 When cat sees the string `-` as a filename, it treats it as a synonym for stdin. To get around this, you need to alter the string that cat sees in such a way that it still refers to a file called `-.` The usual way of doing this is to prefix the filename with a path `./-,` or `/home/Tim/-.` This technique is also used to get around similar issues where command line options clash with filenames, so a file referred to as `./-e` does not appear as the `-e` command line option to a program.Both **cat < -** and **./-** command will give you the output
 
-Flag: CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+**Flag: CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9**
 
-## Level 2 -> 3
+---
 
+## Level 2 to 3
 
-The password for the next level is stored in a file called spaces in this filename located in the home directory
+The password for the next level is stored in a file called **spaces in this filename** located in the home directory
 
 **Commands you may need to solve this level**
 ls, cd, cat, file, du, find
@@ -77,20 +73,20 @@ ls, cd, cat, file, du, find
 
 ### Approach
 
-Ran typical directory reconnaissance to see what files were available. This file included spaces. I knew quotes join filenames with spaces.
+I knew from experience files with spaces could be used but had to be encapsulated in quotes.
 
 ```console
-bandit2@bandit:~$ ls # check to directory for files
+bandit2@bandit:~$ ls
 spaces in this filename
-bandit2@bandit:~$ file spaces\ in\ this\ filename # ran the file command to see what kind of file this was
-spaces in this filename: ASCII text
-bandit2@bandit:~$ cat 'spaces in this filename' # used quotes to wrap the filename so it joined the spaces together to ready the file.
+bandit2@bandit:~$ cat 'spaces in this filename'
 UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 ```
-Flag:UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 
-## Level 3 -> 4
+**Flag:UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK**
 
+---
+
+## Level 3 to 4
 
 The password for the next level is stored in a **hidden file** in the **inhere** directory.
 
@@ -99,21 +95,25 @@ ls, cd, cat, file, du, find
 
 ### Approach
 
-Ran typical directory reconnaissance, since the file was hidden i used the `ls -a` command to show all files including hidden ones, then used the `cat` command to read it.
+I used the `cd` cmd to change directories. Since the file was hidden I used the `ls -a` cmd which listed all files and directories in the current directory. I then used the `cat` cmd to read from the hidden file.
+
+Ran typical directory reconnaissance, since the file was hidden I used the `ls -a` command to show all files including hidden ones, then used the `cat` command to read it.
 
 ```console
 bandit3@bandit:~$ ls
 inhere
 bandit3@bandit:~$ cd inhere
-bandit3@bandit:~/inhere$ ls -a # the -a allows you to see all objects even those hidden behind with .
+bandit3@bandit:~/inhere$ ls -a
 .  ..  .hidden
 bandit3@bandit:~/inhere$ cat .hidden
 pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 ```
 
-Flag:pIwrPrtPN36QITSp3EQaw936yaFoFgAB
+**Flag:pIwrPrtPN36QITSp3EQaw936yaFoFgAB**
 
-## Level 4 -> 5
+---
+
+## Level 4 to 5
 
 The password for the next level is stored in the **only human-readable file in the inhere directory**. Tip: if your terminal is messed up, try the “reset” command.
 
@@ -122,26 +122,12 @@ ls, cd, cat, file, du, find
 
 ### Approach
 
-Ran some reconnaissance on the directories, tried using `ls -h` since it mentioned something about human readability. Did nothing, so i tried using the `file ./filename` to get information on the file, output told me which files were just data and which one was readable.
+I used the `file` cmd on each to find out which file contained the ASCII text.
 
 ```console
 bandit4@bandit:~/inhere$ ls -h
 -file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
-bandit4@bandit:~/inhere$ ls -h -l # not sure what this did
-total 40K
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file00
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file01
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file02
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file03
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file04
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file05
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file06
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file07
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file08
--rw-r----- 1 bandit5 bandit4 33 May  7  2020 -file09
-bandit4@bandit:~/inhere$ ls --human-readable # thought this would be helpful to find out which file had the flag..nope
--file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
-bandit4@bandit:~/inhere$ file ./-file00 # checked the file by path for each file and found the ascii text file
+bandit4@bandit:~/inhere$ file ./-file00
 ./-file00: data
 bandit4@bandit:~/inhere$ file ./-file01
 ./-file01: data
@@ -165,105 +151,95 @@ bandit4@bandit:~/inhere$ cat ./-file07
 koReBOKuIDDepwhWk7jZC0RTdopnAYKh
 ```
 
-Flag:koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+**Flag:koReBOKuIDDepwhWk7jZC0RTdopnAYKh**
 
-## Level 5 -> 6
+---
 
-The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
+## Level 5 to 6
 
-human-readable
-1033 bytes in size
-not executable
+The password for the next level is stored in a file somewhere under the inhere directory and has all the following properties:
+
+- human-readable
+- 1033 bytes in size
+- not executable
 
 **Commands you may need to solve this level**
 ls, cd, cat, file, du, find
 
 ### Approach
 
-Based on the information provided above, i figured i had to run some sort of search using the `find` and `file` command.Running through the `find` man page i was able to find options to find the file based on the properties mentioned above.
+I used the `find` and `file` cmds. The `find` cmd has options for looking for files of a specific size and whether they are human-readable.
 
 ```console
-bandit5@bandit:~/inhere$ find -size 1033c -readable # cmd looks for a file that is of 1033 bytes and readable and not executable
+bandit5@bandit:~/inhere$ find -size 1033c -readable 
 bandit5@bandit:~/inhere$ cd maybehere07
 bandit5@bandit:~/inhere/maybehere07$ ls
 -file1  -file2  -file3  spaces file1  spaces file2  spaces file3
-bandit5@bandit:~/inhere/maybehere07$ ls -l
-total 36
--rwxr-x--- 1 root bandit5 3663 May  7  2020 -file1
--rw-r----- 1 root bandit5 2488 May  7  2020 -file2
--rwxr-x--- 1 root bandit5 3362 May  7  2020 -file3
--rwxr-x--- 1 root bandit5 4130 May  7  2020 spaces file1
--rw-r----- 1 root bandit5 9064 May  7  2020 spaces file2
--rwxr-x--- 1 root bandit5 1022 May  7  2020 spaces file3
-bandit5@bandit:~/inhere/maybehere07$ file ./-file2 # verified file was ASCII
+bandit5@bandit:~/inhere/maybehere07$ file ./-file2
 ./-file2: ASCII text, with very long lines
 bandit5@bandit:~/inhere/maybehere07$ cat .file2
 DXjZPULLxYr17uwoI01bNLQbtFemEgo7
 
 ```
 
-Flag: DXjZPULLxYr17uwoI01bNLQbtFemEgo7
+**Flag: DXjZPULLxYr17uwoI01bNLQbtFemEgo7**
 
-## Level 6 -> 7
+---
 
-The password for the next level is stored somewhere on the server and has all of the following properties:
+## Level 6 to 7
 
-owned by user bandit7
-owned by group bandit6
-33 bytes in size
+The password for the next level is stored somewhere on the server and has all the following properties:
+
+- owned by user bandit7
+- owned by group bandit6
+- 33 bytes in size
 
 **Commands you may need to solve this level**
 ls, cd, cat, file, du, find, grep
 
 ### Approach
 
-Used a similar approach to level 5, man paged the `find ` command to find options for finding files by user and groups. Had to `cd ..` twice to access the entire server. Once there, i did the following.
+I ran the `find -seze 33c -gtoup bandit6 -user bandit7` cmd and located a file in a different directory that matched my parameters. I then `cd` into that folder and verified by running the `find` cmd again. Furthermore, I then ran the `cat` cmd to find the flag.
 
 ```console
 bandit6@bandit:/$ find -size 33c -group bandit6 -user bandit7
-./var/lib/dpkg/info/bandit7.password                <--------------- location of file
+./var/lib/dpkg/info/bandit7.password
 bandit6@bandit:/$ cd var/lib/dpkg/info/ # went to that files directory
-bandit6@bandit:/var/lib/dpkg/info$ find -size 33c -group bandit6 -user bandit7 # ran a search to confirm location
+bandit6@bandit:/var/lib/dpkg/info$ find -size 33c -group bandit6 -user bandit7
 ./bandit7.password
-bandit6@bandit:/var/lib/dpkg/info$ cat ./bandit7.password # opened file to get flag, Booyah!
+bandit6@bandit:/var/lib/dpkg/info$ cat ./bandit7.password
 HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
-
 ```
 
-Flag: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
+**Flag: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs**
 
-## Level 7 -> 8
+---
 
-The password for the next level is stored in the file **data.txt** next to the word millionth
+## Level 7 to 8
+
+The password for the next level is stored in the file *data.txt* next to the word millionth
 
 **Commands you may need to solve this level**
 grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
-I know i'll want to use `grep` because it lets me search through a file. I though of a much easier solution... open the text file using `nano data.txt` then did ctrl + w to search for a word in file.
+I knew I could use `grep` to search for keywords, however I decided to just open the file using `nano data.txt` and then use the `ctrl+w` cmd to search for the word millionth.
 
-**millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV**
-
-verified that method works, decided to check out grep some more and some of the other commands to find other ways to solve this problem (if i could not open a text editor).
-
-Tried the following commands:
-
-**strings**: strings - print the strings of printable characters in files.
-**grep**: grep, egrep, fgrep, rgrep - print lines matching a pattern
-
-Using grep to find the flag worked as well, and requires less typing. I used the following command
+I used the `grep -e` cmd to match for a specific pattern, in this case "millionth".
 
 ```console
-bandit7@bandit:~$ grep -e millionth data.txt # -e is the pattern to search for a pattern in the given file
+bandit7@bandit:~$ grep -e millionth data.txt
 millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV 
 ```
 
-Flag:cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+**Flag:cvX2JJa4CFALtqS87jk27qwqGhBM9plV**
 
-## Level 8 -> 9
+---
 
-The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
+## Level 8 to 9
+
+The password for the next level is stored in the file *data.txt* and is the only line of text that occurs only once
 
 **Commands you may need to solve this level**
 grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
@@ -273,18 +249,118 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
-
-After diving into the sort and uniq commands i was able to find `sort` and `uniq -c`. The `uniq -c` command counts up all the lines in a file and gave a count for the number of occurrences found.
+I used the `sort` and `uniq -c` cmds. The `uniq -c` cmd counts up all the lines in a file and gives a count for the number of occurrences found. The `|` (pipe) cmd allows me to take the output from one command and immediately insert it into another command.
 
 ```console
-sort data.txt | uniq -c # the | (pipe) command allows me to take the output from one command and immediately insert it into another command
+bandit8@bandit:~$ sort data.txt | uniq -c
+     10 07KC3ukwX7kswl8Le9ebb3H3sOoNTsR2
+     10 0efnqHY1ZTNRu4LsDX4D73DsxIQq7RuJ
+     10 0N65ZPpNGkUJePzFxctCRZRXVrCbUGfm
+     10 0Xo6DLyK5izRqEtBA7sW2SRmlAixWYSg
+     10 10XitczY5Dz7UMoseKIeFWSzzwQrylfw
+     10 1ETSsKgjfQj1cJeFzXLJWzKzza3iWcJa
+     10 1T6qw9I32d71cS3TTvwmVp1WsxPFDJ9I
+     10 2bFz9F0yRwxGzVCZ4Er04bk00qfUrzWb
+     10 2CxmtCkpNL5ZjuoNzAtShkPXf5T43W7s
+     10 337o85y4OymIh99WPUtotkb114evfAkC
+     10 33xpPQhjt4Q2mqtX4sCVRwH2Zyh82E8R
+     10 4SMqyZZztep75cte6xxKpVL49pKUkV8N
+     10 5AdqWjoJOEdx5tJmZVBMo0K2e4arD3ZW
+     10 5cO8XuoQWrzsyeOWDht8zgUIVWSRDaeC
+     10 6PF22p6O8TphCTZot9ApZx8VfGuo8rd5
+     10 7KaMzgnYMUeMISP9vuT3Dvsc06qfqa9u
+     10 7uhj3nhe4AS0esnnEZHBAZN67fJ8BFjM
+     10 8jtZmvqp9PTi8tp1oybBM663NQH3fhII
+     10 8NtHZnWzCA8HswoJSCU7Ojg8nP3eKpsA
+     10 aR2QhaBoDMncvJqPWkvLXMzEx9meBIbX
+     10 BccauS9LeE8NUz4HVLXUwE8M1LWisPlG
+     10 bRnktwNdxFy2RPZIshXJikswwEzJGvJ9
+     10 cIPbot7oYveUPNxDMhv1hiri50CqpkTG
+     10 cR6riSWC0ST7ALZ2i1e47r3gc0QxShGo
+     10 CUqLkjIo0Jz9fNgrjPxiPa7PGGC1wpTQ
+     10 dGnfD2LoqTiO1MBf2vmqw1KKEWSHfMKJ
+     10 dqd5wTVO1cVPJoEY7GGkCdGxG6ZYqW98
+     10 dqnvnNxL4QR3ALq95ckhZwEpl77cRgF4
+     10 DqPqVp8YCjZ1vFsclwRTg13EuSc2D52X
+     10 dV0aGGhk6mB4ZJX1aTTluAUIvLWToTYr
+     10 DxxLvJl6cGHXLT7OW4xqS7Qrfny1K01l
+     10 e5HFl4ur1rAxPPv2mHzg1uYKMuos4fwp
+     10 Ef509iQpb5gQJsjz5dMXLxpeAfkbLOrw
+     10 eTHlmI3pFZ4FQASs32Dm0ETVZWHlP0I1
+     10 f0tri5KLH5eiTU0zQOqWvXTsrl1ekqnU
+     10 f6ZuiZizTliaMOkVYXZMudtaReSYMnkP
+     10 flyKxCbHB8uLTaIB5LXqQNuJj3yj00eh
+     10 g1VkH2pk3cmr6aY4np1Dcpm0HF7G9IDT
+     10 g9xRXSlVNiV4EhUAl1p6uPUWcyEewDK6
+     10 gqyF9CW3NNIiGW27AtWVNPqp3i1fxTMY
+     10 h2IsJoN6fe0ne0qrTQxeiu0P44hMWWbk
+     10 hA6Ofhj75FPgqnCKEJ9g6pLSKapxxmGC
+     10 Hq6uxRAkKPNLnH6eRSFDzXtvVt0CSsee
+     10 I3fc578VLa7mOQ1t9zArPPOPY7aDVBcJ
+     10 iIaOHQG7ZLdimomwMQaGIF7vib1RmXBh
+     10 IkAAyqo1rCrxdY8qH0FfxXkRTTO2GNSf
+     10 iKiMcQpNMn2ImOASX39XBUR8XfApdmsj
+     10 InU7h0xhZh4SMMOMvlnsq03pz0k9J5FX
+     10 iwE0KTeKQ8PWihqvjUnpu52YZeIO8Pqb
+     10 J6Lzp6ZqTJsOuJRTXcvhwKfM0KK3Xtbl
+     10 K9D1CLsVCdkodgvJJIt1oHIaiOY1h8hg
+     10 KASHOxc1NxaM8caXUw5MHCkddANXOkCu
+     10 khecG2RClunkhrgmq4UNB26N5F1yiUwL
+     10 kJTBMD8k9OHyXwZ2aJMQkV23u0gyuoIO
+     10 KLu6irnqFwhOKnVoTwuoT9e5t6oxYQwv
+     10 KrDVVORXLPfRhfnRmmuP3OnVHWKDMSM8
+     10 kUbOkhsIw6GSp0WI2YUo1Q3hDxFU0iQn
+     10 l1I3Red7uSH9n30OylHP2hQDbOU0qGaq
+     10 l2lECnJkQk8EBl6IO3gHUlnjoCTF1has
+     10 LfrBHfAh0pP9bgGAZP4QrVkut3pysAYC
+     10 Lg4vWWvEY7s0bG6BRiA35AHzo2gM6lHg
+     10 mpgNGRH628hTQxajScbagkxaPKklUhjn
+     10 mzOW32HQZi14kwrdeiquO1LCbyaOtbiT
+     10 nJRb4MipHMdTmFylFc1NlqmywgxDSdoI
+     10 NLWvtQvL7EaqBNx2x4eznRlQONULlCYZ
+     10 NOdH1kFWibx4XnNaJoLFmghBn7oIs5hb
+     10 ojGabNG5NJ9ppKUBXGr8lwMRRS5GuiA5
+     10 OZ1wgx8bDI0vFOFxDQH32eMMcIPiIuPE
+     10 PfbMe4Xb3mw5mJmabIbKAXKCU7zynDHl
+     10 PQKOeIQwTw490Y8yobuxZAOL4cNmVo1D
+     10 PSdVQSeUUBPRZD58WWP0OXLKxSgU3RxX
+     10 ptb5ZW8TcgD3U6gOGCcN31xCDGIoQSEa
+     10 qaWWAOOquC3yHnfJI4zvPWzCBdfHQ8wa
+     10 RMiSPoAvF7WhgIcOdSQR2r6Zx0DNS5UW
+     10 s1603Q2r4RPKqyoA8cspIRk0VdgEmFC3
+     10 SA05uWMVCao2rzS8YRqUXh19SvnDpuOl
+     10 SHMAMUEzQe4mV7SJpETTZFsyNRJsZE2k
+     10 si952kS1y6pt4AFenmm0oIp8n7W5d3bd
+     10 sYSokIATVvFUKU4sAHTtMarfjlZWWj5i
+     10 SzwgS2ADSjP6ypOzp2bIvdqNyusRtrHj
+     10 TKUtQbeYnEzzYIne7BinoBx2bHFLBXzG
+     10 TThRArdF2ZEXMO47TIYkyPPLtvzzLcDf
+     10 tVW9iY1Ml0uHPK4usZnN8oZXbjRt2ATY
+     10 U0NYdD3wHZKpfEg9qGQOLJimAJy6qxhS
+     10 UASW6CQwD6MRzftu6FAfyXBK0cVvnBLP
+     10 UJiCNvDNfgb3fcCj8PjjnAXHqUM63Uyj
+     10 UjsVbcqKeJqdCZQCDMkzv6A9X7hLbNE4
+      1 UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+     10 UVnZvhiVQECraz5jl8U14sMVZQhjuXia
+     10 V2d9umHiuPLYLIDsuHj0frOEmreCZMaA
+     10 v9zaxkVAOdIOlITZY2uoCtB1fX2gmly9
+     10 VkBAEWyIibVkeURZV5mowiGg6i3m7Be0
+     10 w4zUWFGTUrAAh8lNkS8gH3WK2zowBEkA
+     10 WBqr9xvf6mYTT5kLcTGCG6jb3ex94xWr
+     10 wjNwumEX58RUQTrufHMciWz5Yx10GtTC
+     10 X1JHOUkrb4KgugMXIzMWWIWvRkeZleTI
+     10 XyeJdbrUJyGtdGx8cXLQST0pwu5cvpcA
+     10 yo0HbSe2GM0jJNhRQLxwoPp7ayYEmRKY
+     10 ySvsTwlMgnUF0n86Fgmn2TNjkSOlrV72
+     10 Z9OC6DQpppreChPhwRJJV9YYTtrxNVcO
+     10 zdd2ctVveROGeiS2WE3TeLZMeL5jL7iM
 ```
 
-command will output several lines that have multiple occurrences but one that is unique as well.
+**Flag:UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR**
 
-FLag:UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR
+---
 
-## Level 9 -> 10
+## Level 9 to 10
 
 The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
 
@@ -293,32 +369,30 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
-
-A similar approach to level 8 using `sort`, `grep`, and potentially `strings`.
-
-I figured i'd try and just run `strings data.txt` to see what strings were actually in the file that i could read. I noted an array of strings after several = characters. I tried that and it worked.
-
-**truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk**
+I used the `string data.txt` cmd to find all the lines containing strings then I `|` the output to the `grep -e =` cmd to search for lines containing an "=" sign.
 
 ```console
-x@nQ
+bandit9@bandit:~$ strings data.txt | grep -e =
+========== the*2i"4
+=:G e
+========== password
+<I=zsGi
+Z)========== is
+A=|t&E
+Zdb=
+c^ LAh=3G
 *SF=s
-}1:LF
-]vur
-Emlld
 &========== truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
-_Gmz
-\Uli,
-A5RK
-S'$0
-<4t",
+S=A.H&^
 ```
 
-Flag:truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk
+**Flag:truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk**
 
-## Level 10 -> 11
+---
 
-The password for the next level is stored in the file data.txt, which contains base64 encoded data
+## Level 10 to 11
+
+The password for the next level is stored in the file *data.txt*, which contains base64 encoded data
 
 **Commands you may need to solve this level**
 grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
@@ -328,7 +402,6 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
-
 Since the data.txt file was encoded with base64, I used the `base64 data.txt -d` command to decode the text file and ready the flag.
 
 ```console
@@ -336,11 +409,13 @@ bandit10@bandit:~$ base64 data.txt -d
 The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 ```
 
-Flag:IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+**Flag:IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR**
 
-## Level 11 -> 12
+---
 
-The password for the next level is stored in the file data.txt, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
+## Level 11 to 12
+
+The password for the next level is stored in the file *data.txt*, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
 
 **Commands you may need to solve this level**
 grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
@@ -350,11 +425,9 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
-1. download hxtools in a seperate terminal to use rot13 cmd
+I downloaded `hxtools` on a separate terminal to use its `rot13` cmd. I copied the line from the data.txt file and pasted it into an echo string (since I couldn't access the data.txt file in the other terminal) and then `|` it into the `rot13` cmd.
 
 ```console
-bandit11@bandit:~$ ls
-data.txt
 bandit11@bandit:~$ cat data.txt
 Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh
 
@@ -362,12 +435,13 @@ echo "Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh" | rot13
 The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
 ```
 
-Flag:5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+**Flag:5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu**
 
-## Level 12 -> 13
+---
 
-**Level Goal**
-The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
+## Level 12 to 13
+
+The password for the next level is stored in the file *data.txt*, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under **/tmp** in which you can work using mkdir. For **example: mkdir /tmp/myname123**. Then copy the datafile using cp, and rename it using mv (read the manpages!)
 
 **Commands you may need to solve this level**
 grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd, mkdir, cp, mv, file
@@ -376,6 +450,8 @@ grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd, mkdir, cp, mv, fil
 [Hex dump on Wikipedia](https://en.wikipedia.org/wiki/Hex_dump)
 
 ### Approach
+
+I created a temp folder then copied and moved the data.txt file to it. Using the `file` cmd I knew which compression cmd to use to decompress the file. Once decompressed I had to use the `mv` cmd to change the file extension and repeat those steps until I found the flag.
 
 ```console
 mkdir /tmp/filename
@@ -387,7 +463,8 @@ bandit12@bandit:/tmp/k123$ xxd -r data.txt > flag.txt
 bandit12@bandit:/tmp/k123$ file flag.txt
 flag.txt: gzip compressed data, was "data2.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
 ```
-Use the following sequence to go through and uncompress files using gunzip, bunzip2, and tar -xvf until you get and ACSII file again containing the password.
+
+I used the following cmds `gunzip`, `bunzip2`, and `tar -xvf` until I eventually got the flag.
 
 ```console
 bandit12@bandit:/tmp/k123$ file data8.bin
@@ -400,12 +477,13 @@ bandit12@bandit:/tmp/k123$ cat data8
 The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 ```
 
-Flag:8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+**Flag:8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL**
 
-## Level 13 -> 14
+---
 
-**Level Goal**
-The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
+## Level 13 to 14
+
+The password for the next level is stored in */etc/bandit_pass/bandit14* and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. **Note: localhost is a hostname that refers to the machine you are working on**
 
 **Commands you may need to solve this level**
 ssh, telnet, nc, openssl, s_client, nmap
@@ -415,20 +493,23 @@ ssh, telnet, nc, openssl, s_client, nmap
 
 ### Approach
 
+I ran the `ssh` cmd with the user being bandit14 and the hostname being local host (see man page) then used `-i` for the file containing the sshkey. I then confirmed which user I was with the `whoami` cmd and then looked into the */etc/bandit_pass/bandit14* file for the flag.
+
 ```console
 bandit13@bandit:~$ ssh bandit14@localhost -i sshkey.private
-
+...
 bandit14@bandit:~$ whoami
 bandit14
 bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
 ```
 
-Flag:4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
+**Flag:4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e**
 
-## Level 14 -> 15
+---
 
-**Level Goal**
+## Level 14 to 15
+
 The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
 
 **Commands you may need to solve this level**
@@ -445,9 +526,11 @@ Correct!
 BfMYroe26WYalil77FoDi9qh59eK5xNr
 ```
 
-Flag:BfMYroe26WYalil77FoDi9qh59eK5xNr
+**Flag:BfMYroe26WYalil77FoDi9qh59eK5xNr**
 
-## Level 15 -> 16
+---
+
+## Level 15 to 16
 
 The password for the next level can be retrieved by submitting the password of the current level to **port 30001 on localhost** using SSL encryption.
 
@@ -462,22 +545,22 @@ ssh, telnet, nc, openssl, s_client, nmap
 
 ### Approach
 
-Based on available information i ran a man cmd on openssl and noticed s_client could be useful. I then ran a man cmd on openssl s_client and found the -connect option. So i tried the following command to get the flag.
+I used the `openssl s_client -connect` cmd to connect to the host over port 30001.
 
 ```console
 bandit15@bandit:~$ openssl s_client -connect localhost:30001
-<!-- a block of text was returned to me with some connection information. I then pasted the previous flag and got..-->
----
-BfMYroe26WYalil77FoDi9qh59eK5xNr
+...
+BfMYroe26WYalil77FoDi9qh59eK5xNr # you will need to input previous password
 Correct!
 cluFn7wTiGryunymYOu4RcffSxQluehd
 ```
 
-Flag:cluFn7wTiGryunymYOu4RcffSxQluehd
+**Flag:cluFn7wTiGryunymYOu4RcffSxQluehd**
 
-## Level 16 -> 17
+---
 
-**Level Goal**
+## Level 16 to 17
+
 The credentials for the next level can be retrieved by submitting the password of the current level to **a port on localhost in the range 31000 to 32000**. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
 
 **Commands you may need to solve this level**
@@ -488,7 +571,7 @@ ssh, telnet, nc, openssl, s_client, nmap
 
 ### Approach
 
-I noted port scanning in the helpful reading section and decided to run an nmap scan on localhost
+I noted port scanning in the helpful reading section and decided to run a `Nmap` scan on localhost.
 
 ```console
 bandit16@bandit:~$ nmap localhost -p31000-32000
@@ -505,15 +588,13 @@ PORT      STATE    SERVICE
 31960/tcp open     unknown
 ```
 
-I then used openssl to try to connect to one of those ports and found port 31790 to be the correct one
+I then used the same `openssl` cmd like before to connect to each one of those ports and found port 31790 to be the correct one
 
 ```console
 bandit16@bandit:~$ openssl s_client -connect localhost:31790
-.
-.
-.
+...
 ---
-cluFn7wTiGryunymYOu4RcffSxQluehd entered password and recieved an RSA private key
+cluFn7wTiGryunymYOu4RcffSxQluehd # entered previous password and recieved an RSA private key
 Correct!
 -----BEGIN RSA PRIVATE KEY-----
 MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
@@ -544,18 +625,18 @@ vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
 -----END RSA PRIVATE KEY-----
 ```
 
-I saved the key to a file in a new folder in the tmp directory. Then i used chmod 600 to set permissions only to myself. Afterwards i used ssh to gain access to the next level.
+I saved the key to a file in a new folder in the tmp directory. Then I used `chmod 600` to set permissions only to myself. Afterwards, I used `ssh` to gain access to the next level.
 
 ```console
 bandit16@bandit:/tmp/kyle$ chmod 600 bandit17
-
 bandit16@bandit:/tmp/kyle$ ssh -i bandit17 bandit17@localhost
 ```
 
-## Level 17 -> 18
+---
 
-**Level Goal**
-There are 2 files in the homedirectory: passwords.old and passwords.new. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
+## Level 17 to 18
+
+There are 2 files in the homedirectory: **passwords.old and passwords.new**. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
 
 **NOTE: if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19**
 
@@ -564,7 +645,7 @@ cat, grep, ls, diff
 
 ### Approach
 
-I noticed the diff cmd in the hint for the level so i tried it. Since i'm looking for the change in password.new the top password is the correct one.
+I used the `diff` cmd to find differences between the old and new password file. since the password for the next level is in password.new, the top line was the flag.
 
 ```console
 bandit17@bandit:~$ diff passwords.new passwords.old
@@ -574,12 +655,13 @@ bandit17@bandit:~$ diff passwords.new passwords.old
 > w0Yfolrc5bwjS4qw5mq1nnQi6mF03bii
 ```
 
-Flag:kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
+**Flag:kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd**
 
-## Level 18 -> 19
+---
 
-**Level Goal**
-The password for the next level is stored in a file readme in the homedirectory. Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.
+## Level 18 to 19
+
+The password for the next level is stored in a file **readme** in the homedirectory. Unfortunately, someone has modified *.bashrc* to log you out when you log in with ssh.
 
 **Commands you may need to solve this level**
 ssh, ls, cat
@@ -596,11 +678,12 @@ bandit18@bandit.labs.overthewire.org's password:
 IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
 ```
 
-Flag:IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
+**Flag:IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x**
 
-## Level 19 -> 20
+---
 
-**Level Goal**
+## Level 19 to 20
+
 To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
 
 **Helpful Reading Material**
@@ -608,28 +691,29 @@ To gain access to the next level, you should use the setuid binary in the homedi
 
 ### Approach
 
-After some digging, I realized that using the ./bandit20-do with a cmd executes that cmd as a bandit20 usr not bandit19.
+After some digging, I realized that using the `./bandit20-do` with a cmd executes that cmd as a bandit20 user not bandit19. So I was able to access the bandit20 password file as a bandit20 user.
 
 ```console
 bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 ```
 
-Flag:GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+**Flag:GbKksEFF4yrVs6il55v6gwY5aVje5f0j**
 
-## Level 20 -> 21
+---
 
-**Level Goal**
+## Level 20 to 21
+
 There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
 
-NOTE: Try connecting to your own network daemon to see if it works as you think
+**NOTE: Try connecting to your own network daemon to see if it works as you think**
 
 **Commands you may need to solve this level**
 ssh, nc, cat, bash, screen, tmux, Unix ‘job control’ (bg, fg, jobs, &, CTRL-Z, …)
 
 ### Approach
 
-I opened a second terminal and ssh'd into bandit20. Once inside i ran `nc -lv -p 8080` to create a local connection on port 8080 to listen to in verbose mode. On my main terminal i connected to my local connection on port 8080 by doing `./suconnect 8080`. On terminal 2 i pasted bandit20s password and recieved bandit 21s password on my main terminal.
+I opened a second terminal and used `ssh` to access bandit20. Once inside I ran `nc -lv -p 8080` to create a local connection on port 8080 to listen to in verbose mode. On my main terminal I connected to the connection on port 8080 I just made by doing `./suconnect 8080`. On terminal 2 I pasted bandit20s password and received bandit 21s password on my main terminal.
 
 ```console
 <!-- main terminal -->
@@ -639,7 +723,6 @@ Read: GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 Password matches, sending next password
 bandit20@bandit:~$ GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 
-
 <!-- 2nd terminal -->
 bandit20@bandit:~$ nc -lv -p 8080
 listening on [any] 8080 ...
@@ -648,12 +731,13 @@ GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
 ```
 
-Flag: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
+**Flag: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr**
 
-## Level 21 -> 22
+---
 
-**Level Goal**
-A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+## Level 21 to 22
+
+A program is running automatically at regular intervals from **cron, the time-based job scheduler**. Look in */etc/cron.d/* for the configuration and see what command is being executed.
 
 **NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.**
 
@@ -662,25 +746,15 @@ cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
-Based on the hint, i checked out the cron.d folder and ran the `cat` cmd on several files following the trail until i got to the flag.
+Based on the hint I went to the */etc/cton.d* folder and then looked into *cronjob_bandit22*. Inside I noticed something referring to reboot and a second line with multiple * (in cron this indicates the minutes, hours, etc. before a specific file is executed).
+
+I opened that file using the `cat` cmd and found a second file path in which I had read and write privileges. I took the */etc/bandit_pass/bandit22* file content which I couldn't access and redirected the output to the tmp file which I could.
 
 ```console
 bandit21@bandit:~$ cd /etc/cron.d
 bandit21@bandit:/etc/cron.d$ ls
 cronjob_bandit15_root  cronjob_bandit22  cronjob_bandit24
 cronjob_bandit17_root  cronjob_bandit23  cronjob_bandit25_root
-bandit21@bandit:/etc/cron.d$ ls -la
-total 36
-drwxr-xr-x  2 root root 4096 Jul 11  2020 .
-drwxr-xr-x 87 root root 4096 May 14  2020 ..
--rw-r--r--  1 root root   62 May 14  2020 cronjob_bandit15_root
--rw-r--r--  1 root root   62 Jul 11  2020 cronjob_bandit17_root
--rw-r--r--  1 root root  120 May  7  2020 cronjob_bandit22
--rw-r--r--  1 root root  122 May  7  2020 cronjob_bandit23
--rw-r--r--  1 root root  120 May 14  2020 cronjob_bandit24
--rw-r--r--  1 root root   62 May 14  2020 cronjob_bandit25_root
--rw-r--r--  1 root root  102 Oct  7  2017 .placeholder
-bandit21@bandit:/etc/cron.d$ cat cronjob_bandit22
 @reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
 * * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
 bandit21@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit22.sh
@@ -691,13 +765,13 @@ bandit21@bandit:/etc/cron.d$ cat  /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 ```
 
-Flag: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+**Flag: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI**
 
-## Level 22 -> 23
+---
 
-**Level Goal**
+## Level 22 to 23
 
-A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in */etc/cron.d/* for the configuration and see what command is being executed.
 
 **NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.**
 
@@ -706,7 +780,8 @@ cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
-Similar to the previous level i navigated the various dictionaries and folders and opened up the /usr/bin/cronjob_bandit23.sh file inside i found a bash script..
+I took the exact same approach as the previous level. However, I found a bash script containing the following.
+
 ```bash
 #!/bin/bash
 
@@ -717,38 +792,26 @@ echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
 
 cat /etc/bandit_pass/$myname > /tmp/$mytarget
 ```
-Analyizing the script, i noticed that by running line 4 (the mytarget line) and swapping $myname with bandit23 gives me a hash that i then used to read the file containing the flag.
+
+Analyzing the script, I noticed that by running line 4 (the mytarget line) and swapping *$myname* with bandit23 gives me a hash that I then used to read the file containing the flag.
 
 ```console
-bandit22@bandit:~$ cd /etc/cron.d/
-bandit22@bandit:/etc/cron.d$ ls
-cronjob_bandit15_root  cronjob_bandit22  cronjob_bandit24
-cronjob_bandit17_root  cronjob_bandit23  cronjob_bandit25_root
-bandit22@bandit:/etc/cron.d$ cat cronjob_bandit23
-@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
-* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
-bandit22@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit23.sh
-#!/bin/bash
-
-myname=$(whoami)
-mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
-
-echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
-
 bandit22@bandit:/etc/cron.d$ echo I am user bandit23 | md5sum | cut -d ' ' -f 1
 8ca319486bfbbc3663ea0fbe81326349
 bandit22@bandit:/etc/cron.d$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
 jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 ```
-Flag: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 
-## Level 23 -> 24
+**Flag: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n**
 
-**Level Goal**
+---
 
-A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
+## Level 23 to 24
+
+A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in */etc/cron.d/* for the configuration and see what command is being executed.
 
 **NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!**
+
 **NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…**
 
 **Commands you may need to solve this level**
@@ -756,28 +819,35 @@ cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
-Really have no clue how the script under `bandit23@bandit:/etc/cron.d$ cat /usr/bin/cronjob_bandit24.sh` :
+So the script I found this time does the following:
+
+1. Finds out who the current user is.
+2. Goes to the /var/spool/ directory of the user.
+3. And for each filename of any extension that is not the parent or child directory executes some stuff and then removes the file.
+
 ```bash
 #!/bin/bash
 
-myname=$(whoami) # figures out the current owner
+myname=$(whoami)
 
-cd /var/spool/$myname # goes to this directory in order to execute cmd
+cd /var/spool/$myname
 echo "Executing and deleting all scripts in /var/spool/$myname:" 
-for i in * .*; # for each index that is of any name . any file extension
+for i in * .*;
 do
-    if [ "$i" != "." -a "$i" != ".." ]; # as long as its not the parent or child directory
-    then # do some things with the current file
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
         echo "Handling $i"
         owner="$(stat --format "%U" ./$i)"
         if [ "${owner}" = "bandit23" ]; then
             timeout -s 9 60 ./$i
         fi
-        rm -f ./$i # remove file
+        rm -f ./$i
     fi
 done
 ```
-relates to anything else. I created a bash script in a tmp folder and created the following script...
+
+I created this bash script in a tmp folder. (similar to one from a previous level)
+
 ```bash
 myname=bandit24
 mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
@@ -787,7 +857,9 @@ echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
 cat /etc/bandit_pass/$myname > /tmp/$mytarget
 cat /tmp/$mytarget
 ```
-Instead of running the script with the current user i ran it as if i was bandit24. AFter updating the permissions and running the script i got the flag.
+
+Instead of running the script with the current user I ran it as if I was bandit24 to get the flag.
+
 ```console
 bandit23@bandit:/tmp/kyle$ ./script.sh
 Copying passwordfile /etc/bandit_pass/bandit24 to /tmp/ee4ee1703b083edac9f8183e4ae70293
@@ -795,10 +867,8 @@ Copying passwordfile /etc/bandit_pass/bandit24 to /tmp/ee4ee1703b083edac9f8183e4
 UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
 ```
 
-Flag: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
-
-**Additional Research**
-I looked at other sources for how they got the flag and noticed that information in the cronjob_bandit24.sh script can be used to execute a command.Using the following script and updating privileges using `chmod 777 [script filename]`
+**Side Note**
+I looked at other sources for how they got the flag and noticed that information in the *cronjob_bandit24.sh* script can be used to execute a cmd. I used the cmd shown below and updating privileges using `chmod 777 [script filename]`.
 
 ```bash
 #!/bin/bash
@@ -806,17 +876,20 @@ I looked at other sources for how they got the flag and noticed that information
 cat /etc/bandit_pass/bandit24 > /tmp/[temp dict name]/password.txt
 ```
 
-Since the original cronjob executes minute by minute, if the script is executed and you wait a minute the password.txt file will show up in the tmp folder, if you cat into that file from the var/spool directory you will get the flag.
+Since the original cronjob executes minute by minute, if the script is executed, and you wait a minute the *password.txt* file will show up in the tmp folder, if you cat into that file from the var/spool directory you will get the flag.
 
-## Level 24 -> 25
+**Flag: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ**
 
-**Level Goal**
+---
 
-A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+## Level 24 to 25
+
+A daemon is listening on **port 30002** and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pin code. There is no way to retrieve the pin code except by going through all 10000 combinations, called brute-forcing.
 
 ### Approach
 
-I went ahead and created a new script that did the following
+I went ahead and created a new script that looped through a 4-digit combination from 0000 to 9999 and each time it would echo the password from the previous file and that iterations combo to the screen.
+
 ```bash
 #!/bin/bash
 
@@ -827,34 +900,39 @@ do
     echo $password $i
 done
 ```
-After that i output the results to a txt file and then i connected to the localhost `nc localhost 30002` and redirected the output from the text file to the request from the connection.
+
+I then output the results to a text file, and then I connected to the localhost `nc localhost 30002` and redirected the output from the text file to the request from the connection.
 
 ```console
-bandit24@bandit:nc lkocalhost 30002 < output.txt
+bandit24@bandit:nc localhost 30002 < output.txt
 ...
 Correct!
 The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 ```
 
-Flag: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+**Flag: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG**
 
-## Level 25 -> 26
+---
 
-**Level Goal**
-Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+## Level 25 to 26
+
+Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is **not /bin/bash**, but something else. Find out what it is, how it works and how to break out of it.
 
 **Commands you may need to solve this level**
 ssh, cat, more, vi, ls, id, pwd
 
 ### Approach
 
-in the home directory i found an sshkey that i used to try to connect to bandit26  `ssh -i bandit26.sshkey bandit26@localhost`. Connection closes out instantly with no shell. I check out the `/etc/passwd` file to see file store information. I noticed bandit26 isn't `/bin/bash` but `/usr/bin/showtext`.  I ran the file cmd to see whta it was and then i ran the cat cmd to see what type of script it was. Using the more cmd i can execute commands on the connection page to show more(I have to zoom in really close on the terminal to have the ability to execute on the more cmd). On the more man page is talks about using the v cmd to enter edit mode, once inside the vim editor i dod `:r /etc/bandit_pass/bandit26` and got the flag.
+In the home directory I found an sshkey that I used to connect to bandit26 with the `ssh -i bandit26.sshkey bandit26@localhost` cmd. I noticed the connection closes instantly with no shell. I checked out the */etc/passwd* file to see file store information. Then I noticed bandit26 isn't using */bin/bash* but rather */usr/bin/showtext*.
 
-Flag:  5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z 
+Using the `more` cmd and a tiny or zoomed in terminal (in order to get `more` to show properly) I was able to execute cmds using `!`. I could also open editors using the `v` cmd, which I did. Once inside the vim editor I did `:r /etc/bandit_pass/bandit26` and got the flag.
 
-Level 26 → Level 27
+**Flag:  5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z**
 
-**Level Goal**
+---
+
+## Level 26 to 27
+
 Good job getting a shell! Now hurry and grab the password for bandit27!
 
 **Commands you may need to solve this level**
@@ -863,28 +941,34 @@ ls
 ### Approach
 
 Similar approach to the previous level, however now that your in the editor you want to run a few commands in order to find the flag.
+
+I first set the shell to /bin/bash in order to run cmds. Then using `ls -la` I could so all the files and noticed a *bandit27-do* (similar to the ./sunconnect file form a previous level). Assuming this gives me bandit27 rights I used it to access the bandit_pass/bandit27 file for the flag.
+
 ```console
-:set shell=/bin/bash #change the type of shell used
-:!ls -la #list the files in the directory
+:set shell=/bin/bash
+:shell
+[No write since last change]
+bandit26@bandit:~$ ls -la
 total 36
-drwxr-xr-x  3 root     root     4096 Oct 16 14:00 .
-drwxr-xr-x 41 root     root     4096 Oct 16 14:00 ..
--rwsr-x---  1 bandit27 bandit26 7296 Oct 16 14:00 bandit27-do
+drwxr-xr-x  3 root     root     4096 May  7  2020 .
+drwxr-xr-x 41 root     root     4096 May  7  2020 ..
+-rwsr-x---  1 bandit27 bandit26 7296 May  7  2020 bandit27-do
 -rw-r--r--  1 root     root      220 May 15  2017 .bash_logout
 -rw-r--r--  1 root     root     3526 May 15  2017 .bashrc
 -rw-r--r--  1 root     root      675 May 15  2017 .profile
-drwxr-xr-x  2 root     root     4096 Oct 16 14:00 .ssh
--rw-r-----  1 bandit26 bandit26  258 Oct 16 14:00 text.txt
-:!./bandit27-do cat /etc/bandit_pass/bandit27 #bandit27-do is similar to sunconnect from a previous level where it can be used to access the information restricted to a user.                                                                   
+drwxr-xr-x  2 root     root     4096 May  7  2020 .ssh
+-rw-r-----  1 bandit26 bandit26  258 May  7  2020 text.txt
+bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
 3ba3118a22e93127a4ed485be72ef5ea
 ```
 
-Flag: 3ba3118a22e93127a4ed485be72ef5ea
+**Flag: 3ba3118a22e93127a4ed485be72ef5ea**
 
-# Level 27 -> 28
+---
 
-**Level Goal**
-There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.
+# Level 27 to 28
+
+There is a git repository at **ssh://bandit27-git@localhost/home/bandit27-git/repo**. The password for the user bandit27-git is the same as for the user bandit27.
 
 Clone the repository and find the password for the next level.
 
@@ -893,11 +977,9 @@ git
 
 ### Approach
 
-using the git clone cmd i'm able to download the repo and access it. I first make a tmp directory and cd into it. Once inside i run `bandit27@bandit:/tmp/kyle2$ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo`.
+Using the `git clone` cmd I was able to download the repo and access it. I first made a tmp directory and `cd` into it. Once inside i run `bandit27@bandit:/tmp/kyle2$ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo`.
 
 ```console
-bandit27@bandit:/tmp/kyle2$ ls
-repo
 bandit27@bandit:/tmp/kyle2$ ls -la repo
 total 16
 drwxr-sr-x 3 bandit27 root 4096 Aug 17 00:19 .
@@ -905,18 +987,18 @@ drwxr-sr-x 3 bandit27 root 4096 Aug 17 00:19 ..
 drwxr-sr-x 8 bandit27 root 4096 Aug 17 00:19 .git
 -rw-r--r-- 1 bandit27 root   68 Aug 17 00:19 README
 bandit27@bandit:/tmp/kyle2$ cd repo
-bandit27@bandit:/tmp/kyle2/repo$ ls
-README
 bandit27@bandit:/tmp/kyle2/repo$ cat README
 The password to the next level is: 0ef186ac70e04ea33b4c1853d2526fa2
 ```
 
-Flag: 0ef186ac70e04ea33b4c1853d2526fa2
+**Flag: 0ef186ac70e04ea33b4c1853d2526fa2**
 
-# Level 27 -> 28
+---
+
+# Level 27 to 28
 
 **Level Goal**
-There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.
+There is a git repository at **ssh://bandit28-git@localhost/home/bandit28-git/repo**. The password for the user bandit28-git is the same as for the user bandit28.
 
 Clone the repository and find the password for the next level.
 
@@ -925,7 +1007,7 @@ git
 
 ### Approach
 
-CLone the repo to a tmp work space then check the readme file, noticed the password was not visible. ran git log to see changes to the repo and then used git show with the commit hash to go back to a previous commit to uncover the password.
+Same starting approach as before, but this time the password was not visible. I ran `git log` to see changes to the repo and then used `git show` with the commit hash to go back to a previous commit to uncover the password.
 
 ```console
 bandit28@bandit:/tmp/kyle10$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
@@ -981,11 +1063,13 @@ index 7ba2d2f..3f7cee8 100644
 +- password: bbc96594b4e001778eee9975372716b2
 ```
 
-Flag: bbc96594b4e001778eee9975372716b2
+**Flag: bbc96594b4e001778eee9975372716b2**
 
-Level 29 → Level 30
-**Level Goal**
-There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo. The password for the user bandit29-git is the same as for the user bandit29.
+---
+
+## Level 29 → 30
+
+There is a git repository at **ssh://bandit29-git@localhost/home/bandit29-git/repo**. The password for the user bandit29-git is the same as for the user bandit29.
 
 Clone the repository and find the password for the next level.
 
@@ -994,7 +1078,9 @@ git
 
 ### Approach
 
-This involves working through branches. Notice that the current master branch doesn't have anything for us so we check for other branches using `git branch -a` I then checked out a different branch using `git checkout remotes/origin/dev`. I ran gitt log and noticed data was added for development. Ran `git show` on that commit hash and got the flag.
+Similar starting approach to the previous level. However, this time I had to access a different branch to look at commits and find changes that showed the password.
+
+I checked for other branches using `git branch -a`. I then checked out a different branch using `git checkout remotes/origin/dev`. I ran `git log` and noticed data was added for development. Ran `git show` on that commit hash and got the flag.
 
 ```commit
 bandit29@bandit:/tmp/kyle11/repo$ cat README.md 
@@ -1070,12 +1156,13 @@ index 1af21d3..39b87a8 100644
 +- password: 5b90576bedb2cc04c86a9e924ce42faf
 ```
 
-Flag: 5b90576bedb2cc04c86a9e924ce42faf
+**Flag: 5b90576bedb2cc04c86a9e924ce42faf**
 
-Level 30 → Level 31
+---
 
-**Level Goal**
-There is a git repository at ssh://bandit30-git@localhost/home/bandit30-git/repo. The password for the user bandit30-git is the same as for the user bandit30.
+## Level 30 to 31
+
+There is a git repository at **ssh://bandit30-git@localhost/home/bandit30-git/repo**. The password for the user bandit30-git is the same as for the user bandit30.
 
 Clone the repository and find the password for the next level.
 
@@ -1084,7 +1171,7 @@ git
 
 ### Approach
 
-Tried all the various methods prior and nothing changed. went into the .git directory and checked out the packer-ref file, noticed a different commit hash, tried it out and found the flag.
+Similar starting approaches as before. When those failed I went into the .git directory (using `ls -la` to find) and checked out the packer-ref file, I noticed a different commit hash, tried it out and found the flag.
 
 ```console
 bandit30@bandit:~$ mkdir /tmp/kyle12; cd /tmp/kyle12;git clone ssh://bandit30-git@localhost/home/bandit30-git/repo; cd repo
@@ -1122,18 +1209,6 @@ drwxr-sr-x 8 bandit30 root 4096 Aug 17 03:39 .git
 bandit30@bandit:/tmp/kyle12/repo$ cd .git
 bandit30@bandit:/tmp/kyle12/repo/.git$ ls
 branches  config  description  HEAD  hooks  index  info  logs  objects  packed-refs  refs
-bandit30@bandit:/tmp/kyle12/repo/.git$ cat config
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[remote "origin"]
-	url = ssh://bandit30-git@localhost/home/bandit30-git/repo
-	fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
 bandit30@bandit:/tmp/kyle12/repo/.git$ cat packed-refs 
 # pack-refs with: peeled fully-peeled 
 3aefa229469b7ba1cc08203e5d8fa299354c496b refs/remotes/origin/master
@@ -1142,11 +1217,13 @@ bandit30@bandit:/tmp/kyle12/repo/.git$ git show f17132340e8ee6c159e0a4a6bc6f80e1
 47e603bb428404d265f59c42920d81e5
 ```
 
-Flag:47e603bb428404d265f59c42920d81e5
+**Flag:47e603bb428404d265f59c42920d81e5**
 
-Level 31 → Level 32
-**Level Goal**
-There is a git repository at ssh://bandit31-git@localhost/home/bandit31-git/repo. The password for the user bandit31-git is the same as for the user bandit31.
+---
+
+## Level 31 to 32
+
+There is a git repository at **ssh://bandit31-git@localhost/home/bandit31-git/repo**. The password for the user bandit31-git is the same as for the user bandit31.
 
 Clone the repository and find the password for the next level.
 
@@ -1154,6 +1231,8 @@ Clone the repository and find the password for the next level.
 git
 
 ### Approach
+
+Similar approaches as before. This time I needed to create a *key.txt* file and then add it, commit it, and then push it using git. After I pushed it I put in the previous levels password and got the flag.
 
 ```console
 bandit31@bandit:~$ mkdir /tmp/kyle13
@@ -1199,18 +1278,20 @@ To ssh://localhost/home/bandit31-git/repo
 error: failed to push some refs to 'ssh://bandit31-git@localhost/home/bandit31-git/repo'
 ```
 
-Flag: 56a9bf19c63d650ce78e6ec0354ee45e
+**Flag: 56a9bf19c63d650ce78e6ec0354ee45e**
 
-Level 32 → Level 33
+---
 
-After all this git stuff its time for another escape. Good luck!
+## Level 32 to 33
+
+After all this git stuff it's time for another escape. Good luck!
 
 **Commands you may need to solve this level**
 sh, man
 
 ### Approach
 
-get an interactive shell by inserting $0 in the fake shell, then we run vim end read the password for the next level.
+I was able to get an interactive shell by inserting $0, then ran vim to read the password for the next level.
 
 ```console
 WELCOME TO THE UPPERCASE SHELL
@@ -1225,4 +1306,4 @@ $ vim
 c9c3199ddf4121b10cf581a98d51caee
 ```
 
-Flag: c9c3199ddf4121b10cf581a98d51caee
+**Flag: c9c3199ddf4121b10cf581a98d51caee**
