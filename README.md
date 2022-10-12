@@ -9,3 +9,6 @@ These wargames are my first attempt at learning the hacker mindset and doing CTF
 
 **Natas** Natas teaches the basics of serverside web-security.
 
+## TryHackMe
+
+**Basic_pentest** (brute-forcing, hash cracking, service enumeration, linux enumeration)
