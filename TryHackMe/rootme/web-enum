@@ -12,15 +12,25 @@ by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
 ===============================================================
 2022/10/15 17:42:45 Starting gobuster in directory enumeration mode
 ===============================================================
-[2K/.hta                 (Status: 403) [Size: 277]
-[2K/.htaccess            (Status: 403) [Size: 277]
-[2K/.htpasswd            (Status: 403) [Size: 277]
-[2K/css                  (Status: 301) [Size: 310] [--> http://10.10.56.211/css/]
-[2K/index.php            (Status: 200) [Size: 616]
-[2K/js                   (Status: 301) [Size: 309] [--> http://10.10.56.211/js/]
-[2K/panel                (Status: 301) [Size: 312] [--> http://10.10.56.211/panel/]
-[2K/server-status        (Status: 403) [Size: 277]
-[2K/uploads              (Status: 301) [Size: 314] [--> http://10.10.56.211/uploads/]
+
+[2K/.hta                 (Status: 403) [Size: 277]
+
+[2K/.htaccess            (Status: 403) [Size: 277]
+
+[2K/.htpasswd            (Status: 403) [Size: 277]
+
+[2K/css                  (Status: 301) [Size: 310] [--> http://10.10.56.211/css/]
+
+[2K/index.php            (Status: 200) [Size: 616]
+
+[2K/js                   (Status: 301) [Size: 309] [--> http://10.10.56.211/js/]
+
+[2K/panel                (Status: 301) [Size: 312] [--> http://10.10.56.211/panel/]
+
+[2K/server-status        (Status: 403) [Size: 277]
+
+[2K/uploads              (Status: 301) [Size: 314] [--> http://10.10.56.211/uploads/]
 ===============================================================
 2022/10/15 17:43:53 Finished
 ===============================================================
+
