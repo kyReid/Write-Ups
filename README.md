@@ -11,4 +11,6 @@ These wargames are my first attempt at learning the hacker mindset and doing CTF
 
 ## TryHackMe
 
-**Basic_pentest** (brute-forcing, hash cracking, service enumeration, linux enumeration)
+**Basic_pentest** (This is a machine that allows you to practise web app hacking and privilege escalation )
+**RootMe** (A ctf for beginners, can you root me?)
+**Pickle Rick** (A Rick and Morty CTF. Help turn Rick back into a human!)
