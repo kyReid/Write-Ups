@@ -1,10 +1,10 @@
 # OverTheWire Wargame: Bandit
 
->The Bandit wargame is aimed at absolute beginners. It will teach the basics needed to be able to play other wargames.
+**The Bandit wargame is aimed at absolute beginners. It will teach the basics needed to be able to play other wargames.**
 
-> Completed: 08/16/2022
+**Completed: 08/16/2022**
 
-## Level 0 to 1
+## Level 00
 
 The password for the next level is stored in a file called **readme** located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
 
