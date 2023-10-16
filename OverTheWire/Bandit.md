@@ -4,7 +4,7 @@
 
 **Completed: 08/16/2022**
 
-## Level 00
+## Level 0
 
 The password for the next level is stored in a file called **readme** located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
 
@@ -24,20 +24,11 @@ bandit0@bandit:~$ cat readme # cat allows me to read a file in terminal
 boJ9jbbUNNfktd78OOpsqOltutMc3MY1
 ```
 
-**Flag: boJ9jbbUNNfktd78OOpsqOltutMc3MY1**
-
 ---
 
-## Level 1 to 2
+## Level 1
 
 The password for the next level is stored in a file called **-** located in the home directory.
-
-**Commands you may need to solve this level**
-ls, cd, cat, file, du, find
-
-**Helpful Reading Material**
-[Google Search for “dashed filename”](https://www.google.com/search?q=dashed+filename)
-[Advanced Bash-scripting Guide - Chapter 3 - Special Characters](http://tldp.org/LDP/abs/html/special-chars.html)
 
 ### Approach
 
@@ -57,19 +48,11 @@ With bash redirection, - is not recognized as a special filename, so bash will u
 
 When cat sees the string `-` as a filename, it treats it as a synonym for stdin. To get around this, you need to alter the string that cat sees in such a way that it still refers to a file called `-.` The usual way of doing this is to prefix the filename with a path `./-,` or `/home/Tim/-.` This technique is also used to get around similar issues where command line options clash with filenames, so a file referred to as `./-e` does not appear as the `-e` command line option to a program.Both **cat < -** and **./-** command will give you the output
 
-**Flag: CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9**
-
 ---
 
-## Level 2 to 3
+## Level 2
 
 The password for the next level is stored in a file called **spaces in this filename** located in the home directory
-
-**Commands you may need to solve this level**
-ls, cd, cat, file, du, find
-
-**Helpful Reading Material**
-[Google Search for “spaces in filename”](https://www.google.com/search?q=spaces+in+filename)
 
 ### Approach
 
@@ -81,17 +64,11 @@ spaces in this filename
 bandit2@bandit:~$ cat 'spaces in this filename'
 UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
 ```
-
-**Flag:UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK**
-
 ---
 
-## Level 3 to 4
+## Level 3
 
 The password for the next level is stored in a **hidden file** in the **inhere** directory.
-
-**Commands you may need to solve this level**
-ls, cd, cat, file, du, find
 
 ### Approach
 
@@ -108,54 +85,30 @@ bandit3@bandit:~/inhere$ ls -a
 bandit3@bandit:~/inhere$ cat .hidden
 pIwrPrtPN36QITSp3EQaw936yaFoFgAB
 ```
-
-**Flag:pIwrPrtPN36QITSp3EQaw936yaFoFgAB**
-
 ---
 
-## Level 4 to 5
+## Level 4
 
 The password for the next level is stored in the **only human-readable file in the inhere directory**. Tip: if your terminal is messed up, try the “reset” command.
 
-**Commands you may need to solve this level**
-ls, cd, cat, file, du, find
-
 ### Approach
 
-I used the `file` cmd on each to find out which file contained the ASCII text.
-
 ```console
-bandit4@bandit:~/inhere$ ls -h
--file00  -file01  -file02  -file03  -file04  -file05  -file06  -file07  -file08  -file09
-bandit4@bandit:~/inhere$ file ./-file00
-./-file00: data
-bandit4@bandit:~/inhere$ file ./-file01
-./-file01: data
-bandit4@bandit:~/inhere$ file ./-file02
-./-file02: data
-bandit4@bandit:~/inhere$ file ./-file03
-./-file03: data
-bandit4@bandit:~/inhere$ file ./-file04
-./-file04: data
-bandit4@bandit:~/inhere$ file ./-file05
-./-file05: data
-bandit4@bandit:~/inhere$ file ./-file06
-./-file06: data
-bandit4@bandit:~/inhere$ file ./-file07
-./-file07: ASCII text
-bandit4@bandit:~/inhere$ file ./-file08
-./-file08: data
-bandit4@bandit:~/inhere$ file ./-file09
-./-file09: data
-bandit4@bandit:~/inhere$ cat ./-file07
-koReBOKuIDDepwhWk7jZC0RTdopnAYKh
+bandit4@bandit:~/inhere$ file -i ./-file0*
+./-file00: application/octet-stream; charset=binary
+./-file01: application/octet-stream; charset=binary
+./-file02: application/octet-stream; charset=binary
+./-file03: application/octet-stream; charset=binary
+./-file04: application/octet-stream; charset=binary
+./-file05: application/octet-stream; charset=binary
+./-file06: application/octet-stream; charset=binary
+./-file07: text/plain; charset=us-ascii
+./-file08: application/octet-stream; charset=binary
+./-file09: application/octet-stream; charset=binary
 ```
-
-**Flag:koReBOKuIDDepwhWk7jZC0RTdopnAYKh**
-
 ---
 
-## Level 5 to 6
+## Level 5
 
 The password for the next level is stored in a file somewhere under the inhere directory and has all the following properties:
 
@@ -163,39 +116,23 @@ The password for the next level is stored in a file somewhere under the inhere d
 - 1033 bytes in size
 - not executable
 
-**Commands you may need to solve this level**
-ls, cd, cat, file, du, find
-
 ### Approach
 
-I used the `find` and `file` cmds. The `find` cmd has options for looking for files of a specific size and whether they are human-readable.
-
 ```console
-bandit5@bandit:~/inhere$ find -size 1033c -readable 
-bandit5@bandit:~/inhere$ cd maybehere07
-bandit5@bandit:~/inhere/maybehere07$ ls
--file1  -file2  -file3  spaces file1  spaces file2  spaces file3
-bandit5@bandit:~/inhere/maybehere07$ file ./-file2
-./-file2: ASCII text, with very long lines
-bandit5@bandit:~/inhere/maybehere07$ cat .file2
-DXjZPULLxYr17uwoI01bNLQbtFemEgo7
-
+bandit5@bandit:~/inhere$ find -size 1033c
+./maybehere07/.file2
+bandit5@bandit:~/inhere$ cat ./maybehere07/.file2
+P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
 ```
-
-**Flag: DXjZPULLxYr17uwoI01bNLQbtFemEgo7**
-
 ---
 
-## Level 6 to 7
+## Level 6
 
 The password for the next level is stored somewhere on the server and has all the following properties:
 
 - owned by user bandit7
 - owned by group bandit6
 - 33 bytes in size
-
-**Commands you may need to solve this level**
-ls, cd, cat, file, du, find, grep
 
 ### Approach
 
@@ -210,17 +147,11 @@ bandit6@bandit:/var/lib/dpkg/info$ find -size 33c -group bandit6 -user bandit7
 bandit6@bandit:/var/lib/dpkg/info$ cat ./bandit7.password
 HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs
 ```
-
-**Flag: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs**
-
 ---
 
-## Level 7 to 8
+## Level 7
 
 The password for the next level is stored in the file *data.txt* next to the word millionth
-
-**Commands you may need to solve this level**
-grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
@@ -233,19 +164,11 @@ bandit7@bandit:~$ grep -e millionth data.txt
 millionth       cvX2JJa4CFALtqS87jk27qwqGhBM9plV 
 ```
 
-**Flag:cvX2JJa4CFALtqS87jk27qwqGhBM9plV**
-
 ---
 
-## Level 8 to 9
+## Level 8
 
 The password for the next level is stored in the file *data.txt* and is the only line of text that occurs only once
-
-**Commands you may need to solve this level**
-grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
-
-**Helpful Reading Material**
-[Piping and Redirection](https://ryanstutorials.net/linuxtutorial/piping.php)
 
 ### Approach
 
@@ -360,12 +283,9 @@ bandit8@bandit:~$ sort data.txt | uniq -c
 
 ---
 
-## Level 9 to 10
+## Level 9
 
 The password for the next level is stored in the file data.txt in one of the few human-readable strings, preceded by several ‘=’ characters.
-
-**Commands you may need to solve this level**
-grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
 
 ### Approach
 
@@ -390,15 +310,9 @@ S=A.H&^
 
 ---
 
-## Level 10 to 11
+## Level 10
 
 The password for the next level is stored in the file *data.txt*, which contains base64 encoded data
-
-**Commands you may need to solve this level**
-grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
-
-**Helpful Reading Material**
-[Base64 on Wikipedia](https://en.wikipedia.org/wiki/Base64)
 
 ### Approach
 
