@@ -306,8 +306,6 @@ c^ LAh=3G
 S=A.H&^
 ```
 
-**Flag:truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk**
-
 ---
 
 ## Level 10
@@ -323,19 +321,11 @@ bandit10@bandit:~$ base64 data.txt -d
 The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
 ```
 
-**Flag:IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR**
-
 ---
 
-## Level 11 to 12
+## Level 11
 
 The password for the next level is stored in the file *data.txt*, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions
-
-**Commands you may need to solve this level**
-grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd
-
-**Helpful Reading Material**
-[Rot13 on Wikipedia](https://en.wikipedia.org/wiki/Rot13)
 
 ### Approach
 
@@ -349,19 +339,11 @@ echo "Gur cnffjbeq vf 5Gr8L4qetPEsPk8htqjhRK8XSP6x2RHh" | rot13
 The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
 ```
 
-**Flag:5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu**
-
 ---
 
-## Level 12 to 13
+## Level 12
 
 The password for the next level is stored in the file *data.txt*, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under **/tmp** in which you can work using mkdir. For **example: mkdir /tmp/myname123**. Then copy the datafile using cp, and rename it using mv (read the manpages!)
-
-**Commands you may need to solve this level**
-grep, sort, uniq, strings, base64, tr, tar, gzip, bzip2, xxd, mkdir, cp, mv, file
-
-**Helpful Reading Material**
-[Hex dump on Wikipedia](https://en.wikipedia.org/wiki/Hex_dump)
 
 ### Approach
 
@@ -391,19 +373,11 @@ bandit12@bandit:/tmp/k123$ cat data8
 The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
 ```
 
-**Flag:8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL**
-
 ---
 
-## Level 13 to 14
+## Level 13
 
 The password for the next level is stored in */etc/bandit_pass/bandit14* and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. **Note: localhost is a hostname that refers to the machine you are working on**
-
-**Commands you may need to solve this level**
-ssh, telnet, nc, openssl, s_client, nmap
-
-**Helpful Reading Material**
-[SSH/OpenSSH/Keys](https://help.ubuntu.com/community/SSH/OpenSSH/Keys)
 
 ### Approach
 
@@ -418,16 +392,11 @@ bandit14@bandit:~$ cat /etc/bandit_pass/bandit14
 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e
 ```
 
-**Flag:4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e**
-
 ---
 
-## Level 14 to 15
+## Level 14
 
 The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
-
-**Commands you may need to solve this level**
-ssh, telnet, nc, openssl, s_client, nmap
 
 ### Approach
 
@@ -440,22 +409,13 @@ Correct!
 BfMYroe26WYalil77FoDi9qh59eK5xNr
 ```
 
-**Flag:BfMYroe26WYalil77FoDi9qh59eK5xNr**
-
 ---
 
-## Level 15 to 16
+## Level 15
 
 The password for the next level can be retrieved by submitting the password of the current level to **port 30001 on localhost** using SSL encryption.
 
 **Helpful note: Getting “HEARTBEATING” and “Read R BLOCK”? Use -ign_eof and read the “CONNECTED COMMANDS” section in the manpage. Next to ‘R’ and ‘Q’, the ‘B’ command also works in this version of that command…**
-
-**Commands you may need to solve this level**
-ssh, telnet, nc, openssl, s_client, nmap
-
-**Helpful Reading Material**
-[Secure Socket Layer/Transport Layer Security on Wikipedia](https://en.wikipedia.org/wiki/Secure_Socket_Layer)
-[OpenSSL Cookbook - Testing with OpenSSL](https://www.feistyduck.com/library/openssl-cookbook/online/ch-testing-with-openssl.html)
 
 ### Approach
 
@@ -469,19 +429,11 @@ Correct!
 cluFn7wTiGryunymYOu4RcffSxQluehd
 ```
 
-**Flag:cluFn7wTiGryunymYOu4RcffSxQluehd**
-
 ---
 
-## Level 16 to 17
+## Level 16
 
 The credentials for the next level can be retrieved by submitting the password of the current level to **a port on localhost in the range 31000 to 32000**. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
-
-**Commands you may need to solve this level**
-ssh, telnet, nc, openssl, s_client, nmap
-
-**Helpful Reading Material**
-[Port scanner on Wikipedia](https://en.wikipedia.org/wiki/Port_scanner)
 
 ### Approach
 
@@ -548,7 +500,7 @@ bandit16@bandit:/tmp/kyle$ ssh -i bandit17 bandit17@localhost
 
 ---
 
-## Level 17 to 18
+## Level 17
 
 There are 2 files in the homedirectory: **passwords.old and passwords.new**. The password for the next level is in passwords.new and is the only line that has been changed between passwords.old and passwords.new
 
@@ -568,17 +520,11 @@ bandit17@bandit:~$ diff passwords.new passwords.old
 ---
 > w0Yfolrc5bwjS4qw5mq1nnQi6mF03bii
 ```
-
-**Flag:kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd**
-
 ---
 
-## Level 18 to 19
+## Level 18
 
 The password for the next level is stored in a file **readme** in the homedirectory. Unfortunately, someone has modified *.bashrc* to log you out when you log in with ssh.
-
-**Commands you may need to solve this level**
-ssh, ls, cat
 
 ### Approach
 
@@ -592,16 +538,11 @@ bandit18@bandit.labs.overthewire.org's password:
 IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
 ```
 
-**Flag:IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x**
-
 ---
 
-## Level 19 to 20
+## Level 19
 
 To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
-
-**Helpful Reading Material**
-[setuid on Wikipedia](https://en.wikipedia.org/wiki/Setuid)
 
 ### Approach
 
@@ -611,19 +552,13 @@ After some digging, I realized that using the `./bandit20-do` with a cmd execute
 bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 ```
-
-**Flag:GbKksEFF4yrVs6il55v6gwY5aVje5f0j**
-
 ---
 
-## Level 20 to 21
+## Level 20
 
 There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
 
 **NOTE: Try connecting to your own network daemon to see if it works as you think**
-
-**Commands you may need to solve this level**
-ssh, nc, cat, bash, screen, tmux, Unix ‘job control’ (bg, fg, jobs, &, CTRL-Z, …)
 
 ### Approach
 
@@ -644,19 +579,13 @@ connect to [127.0.0.1] from localhost [127.0.0.1] 54966
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
 ```
-
-**Flag: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr**
-
 ---
 
-## Level 21 to 22
+## Level 21
 
 A program is running automatically at regular intervals from **cron, the time-based job scheduler**. Look in */etc/cron.d/* for the configuration and see what command is being executed.
 
 **NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.**
-
-**Commands you may need to solve this level**
-cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
@@ -678,19 +607,13 @@ cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 bandit21@bandit:/etc/cron.d$ cat  /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 ```
-
-**Flag: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI**
-
 ---
 
-## Level 22 to 23
+## Level 22
 
 A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in */etc/cron.d/* for the configuration and see what command is being executed.
 
 **NOTE: Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.**
-
-**Commands you may need to solve this level**
-cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
@@ -716,20 +639,15 @@ bandit22@bandit:/etc/cron.d$ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
 jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 ```
 
-**Flag: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n**
-
 ---
 
-## Level 23 to 24
+## Level 23
 
 A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in */etc/cron.d/* for the configuration and see what command is being executed.
 
 **NOTE: This level requires you to create your own first shell-script. This is a very big step and you should be proud of yourself when you beat this level!**
 
 **NOTE 2: Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…**
-
-**Commands you may need to solve this level**
-cron, crontab, crontab(5) (use “man 5 crontab” to access this)
 
 ### Approach
 
@@ -792,11 +710,9 @@ cat /etc/bandit_pass/bandit24 > /tmp/[temp dict name]/password.txt
 
 Since the original cronjob executes minute by minute, if the script is executed, and you wait a minute the *password.txt* file will show up in the tmp folder, if you cat into that file from the var/spool directory you will get the flag.
 
-**Flag: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ**
-
 ---
 
-## Level 24 to 25
+## Level 24
 
 A daemon is listening on **port 30002** and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pin code. There is no way to retrieve the pin code except by going through all 10000 combinations, called brute-forcing.
 
@@ -824,16 +740,11 @@ Correct!
 The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 ```
 
-**Flag: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG**
-
 ---
 
-## Level 25 to 26
+## Level 25
 
 Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is **not /bin/bash**, but something else. Find out what it is, how it works and how to break out of it.
-
-**Commands you may need to solve this level**
-ssh, cat, more, vi, ls, id, pwd
 
 ### Approach
 
@@ -841,16 +752,11 @@ In the home directory I found an sshkey that I used to connect to bandit26 with 
 
 Using the `more` cmd and a tiny or zoomed in terminal (in order to get `more` to show properly) I was able to execute cmds using `!`. I could also open editors using the `v` cmd, which I did. Once inside the vim editor I did `:r /etc/bandit_pass/bandit26` and got the flag.
 
-**Flag:  5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z**
-
 ---
 
-## Level 26 to 27
+## Level 26
 
 Good job getting a shell! Now hurry and grab the password for bandit27!
-
-**Commands you may need to solve this level**
-ls
 
 ### Approach
 
@@ -876,18 +782,13 @@ bandit26@bandit:~$ ./bandit27-do cat /etc/bandit_pass/bandit27
 3ba3118a22e93127a4ed485be72ef5ea
 ```
 
-**Flag: 3ba3118a22e93127a4ed485be72ef5ea**
-
 ---
 
-# Level 27 to 28
+# Level 27
 
 There is a git repository at **ssh://bandit27-git@localhost/home/bandit27-git/repo**. The password for the user bandit27-git is the same as for the user bandit27.
 
 Clone the repository and find the password for the next level.
-
-**Commands you may need to solve this level**
-git
 
 ### Approach
 
@@ -904,20 +805,14 @@ bandit27@bandit:/tmp/kyle2$ cd repo
 bandit27@bandit:/tmp/kyle2/repo$ cat README
 The password to the next level is: 0ef186ac70e04ea33b4c1853d2526fa2
 ```
-
-**Flag: 0ef186ac70e04ea33b4c1853d2526fa2**
-
 ---
 
-# Level 27 to 28
+# Level 27
 
 **Level Goal**
 There is a git repository at **ssh://bandit28-git@localhost/home/bandit28-git/repo**. The password for the user bandit28-git is the same as for the user bandit28.
 
 Clone the repository and find the password for the next level.
-
-**Commands you may need to solve this level**
-git
 
 ### Approach
 
@@ -977,18 +872,13 @@ index 7ba2d2f..3f7cee8 100644
 +- password: bbc96594b4e001778eee9975372716b2
 ```
 
-**Flag: bbc96594b4e001778eee9975372716b2**
-
 ---
 
-## Level 29 → 30
+## Level 29
 
 There is a git repository at **ssh://bandit29-git@localhost/home/bandit29-git/repo**. The password for the user bandit29-git is the same as for the user bandit29.
 
 Clone the repository and find the password for the next level.
-
-**Commands you may need to solve this level**
-git
 
 ### Approach
 
@@ -1070,18 +960,13 @@ index 1af21d3..39b87a8 100644
 +- password: 5b90576bedb2cc04c86a9e924ce42faf
 ```
 
-**Flag: 5b90576bedb2cc04c86a9e924ce42faf**
-
 ---
 
-## Level 30 to 31
+## Level 30 
 
 There is a git repository at **ssh://bandit30-git@localhost/home/bandit30-git/repo**. The password for the user bandit30-git is the same as for the user bandit30.
 
 Clone the repository and find the password for the next level.
-
-**Commands you may need to solve this level**
-git
 
 ### Approach
 
@@ -1130,19 +1015,13 @@ f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea refs/tags/secret
 bandit30@bandit:/tmp/kyle12/repo/.git$ git show f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea
 47e603bb428404d265f59c42920d81e5
 ```
-
-**Flag:47e603bb428404d265f59c42920d81e5**
-
 ---
 
-## Level 31 to 32
+## Level 31
 
 There is a git repository at **ssh://bandit31-git@localhost/home/bandit31-git/repo**. The password for the user bandit31-git is the same as for the user bandit31.
 
 Clone the repository and find the password for the next level.
-
-**Commands you may need to solve this level**
-git
 
 ### Approach
 
@@ -1191,17 +1070,11 @@ To ssh://localhost/home/bandit31-git/repo
  ! [remote rejected] master -> master (pre-receive hook declined)
 error: failed to push some refs to 'ssh://bandit31-git@localhost/home/bandit31-git/repo'
 ```
-
-**Flag: 56a9bf19c63d650ce78e6ec0354ee45e**
-
 ---
 
-## Level 32 to 33
+## Level 32
 
 After all this git stuff it's time for another escape. Good luck!
-
-**Commands you may need to solve this level**
-sh, man
 
 ### Approach
 
@@ -1219,5 +1092,3 @@ $ vim
 
 c9c3199ddf4121b10cf581a98d51caee
 ```
-
-**Flag: c9c3199ddf4121b10cf581a98d51caee**
